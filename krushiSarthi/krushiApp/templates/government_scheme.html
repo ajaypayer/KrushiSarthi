@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Government Schemes</title>
+  <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+  <div class="logo">
+    🌾 <b>Farmer Awareness Portal</b>
+  </div>
+
+  <div class="nav-right">
+
+    <button class="lang">EN</button>
+    <button class="lang">हिंदी</button>
+    <button class="lang">मराठी</button>
+
+    <a href="{% url 'home' %}">
+      <button class="login">Login / Admin</button>
+    </a>
+
+  </div>
+
+</header>
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <a href="{% url 'home' %}">← Back to Home</a>
+  <h1>Government Schemes</h1>
+  <p>Find schemes based on your crop and category</p>
+</section>
+
+<!-- SEARCH + FILTER -->
+<div class="filter">
+
+  <input type="text" id="search" placeholder="Search schemes...">
+
+  <select id="category">
+    <option value="all">All Schemes</option>
+    <option value="central">Central</option>
+    <option value="state">State</option>
+  </select>
+
+  <select id="crop">
+    <option value="all">All Crops</option>
+    <option value="wheat">Wheat</option>
+    <option value="rice">Rice</option>
+    <option value="allcrops">All Crops</option>
+  </select>
+
+</div>
+
+
+<!-- SCHEME LIST -->
+<section class="schemes" id="schemeList">
+
+  <!-- PM KISAN -->
+  <div class="scheme-card" 
+       data-category="central" 
+       data-crop="allcrops">
+
+    <h2>Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)</h2>
+
+    <div class="tag">Central</div>
+
+    <h4>Benefits</h4>
+    <ul>
+      <li>₹6000 per year</li>
+      <li>Direct bank transfer</li>
+      <li>No application fee</li>
+    </ul>
+
+    <h4>Eligibility</h4>
+    <ul>
+      <li>Small farmers</li>
+      <li>Own agricultural land</li>
+    </ul>
+
+    <button>Apply Now</button>
+  </div>
+
+
+  <!-- PMFBY -->
+  <div class="scheme-card" 
+       data-category="central" 
+       data-crop="rice">
+
+    <h2>Pradhan Mantri Fasal Bima Yojana</h2>
+
+    <div class="tag">Central</div>
+
+    <h4>Benefits</h4>
+    <ul>
+      <li>Crop insurance</li>
+      <li>Low premium</li>
+    </ul>
+
+    <button>Apply Now</button>
+  </div>
+
+
+  <!-- Soil Health -->
+  <div class="scheme-card" 
+       data-category="state" 
+       data-crop="wheat">
+
+    <h2>Soil Health Card Scheme</h2>
+
+    <div class="tag">State</div>
+
+    <ul>
+      <li>Free soil testing</li>
+    </ul>
+
+    <button>Apply Now</button>
+  </div>
+
+
+  <!-- KCC -->
+  <div class="scheme-card" 
+       data-category="central" 
+       data-crop="allcrops">
+
+    <h2>Kisan Credit Card</h2>
+
+    <div class="tag">Central</div>
+
+    <ul>
+      <li>Low interest loans</li>
+    </ul>
+
+    <button>Apply Now</button>
+  </div>
+
+</section>
+
+
+<script src="{% static 'krushiApp/js/app.js' %}"></script>
+</body>
+</html>

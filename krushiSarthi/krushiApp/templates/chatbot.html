@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farmer Chatbot</title>
+  <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<header class="navbar">
+   <div class="logo">
+    🌾 <b>Farmer Awareness Portal</b>
+  </div>
+
+  <div class="nav-right">
+    <button class="lang">EN</button>
+    <button class="lang">हिंदी</button>
+    <button class="lang">मराठी</button>
+    <a href="{% url 'home' %}">
+      <button class="login">Signup / Login</button>
+    </a>
+  </div>
+</header>
+
+
+<!-- ===== HEADER ===== -->
+<section class="chat-header">
+  <a href="{% url 'home' %}" class="back">🏠 Back to Home</a>
+
+  <div class="chat-title">
+    <div class="chat-icon">💬</div>
+    <div>
+      <h1>Farmer Chatbot</h1>
+      <p>किसान चैटबोट सहायक</p>
+    </div>
+  </div>
+
+  <p class="chat-desc">
+    Ask me anything about schemes, MSP, loans, and farming information.
+  </p>
+</section>
+
+
+<!-- ===== CHAT CONTAINER ===== -->
+<div class="chat-container">
+
+  <!-- Chat messages -->
+  <div class="chat-box" id="chatBox">
+
+    <div class="bot-msg">
+      Hello Farmer How can I help you today? I can answer about schemes, MSP, loans and farming.
+      <div class="time">11:53 pm</div>
+    </div>
+
+  </div>
+
+
+  <!-- Suggested Questions -->
+  <div class="suggested">
+
+    <p>Suggested Questions:</p>
+
+    <button class="suggest">Which schemes am I eligible for?</button>
+    <button class="suggest">What is MSP for wheat?</button>
+    <button class="suggest">Tell about Kisan Credit Card</button>
+    <button class="suggest">How to apply crop insurance?</button>
+    <button class="suggest">Interest rates for crop loans?</button>
+
+  </div>
+
+
+  <!-- Input -->
+  <div class="chat-input">
+
+    <input type="text" id="userInput" placeholder="Type your question here...">
+
+    <button onclick="sendMessage()">Send</button>
+
+  </div>
+
+</div>
+
+
+<!-- ===== FEATURES ===== -->
+<section class="chat-features">
+
+  <div class="feature-card">
+    <h3>24/7 Available</h3>
+    <p>Get help anytime</p>
+  </div>
+
+  <div class="feature-card">
+    <h3>AI Powered</h3>
+    <p>Smart responses</p>
+  </div>
+
+  <div class="feature-card">
+    <h3>Voice Support</h3>
+    <p>Coming soon</p>
+  </div>
+
+</section>
+
+<script src="{% static 'krushiApp/js/app.js' %}"></script>
+</body>
+</html>

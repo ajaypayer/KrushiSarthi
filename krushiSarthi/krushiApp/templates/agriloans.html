@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Agricultural Loan</title>
+  <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<header class="navbar">
+  <div class="logo">
+    🌾 <b>Farmer Awareness Portal</b>
+  </div>
+
+  <div class="nav-right">
+    <button class="lang">EN</button>
+    <button class="lang">हिंदी</button>
+    <button class="lang">मराठी</button>
+
+    <a href="{% url 'home' %}">
+      <button class="login">Signup / Login</button>
+    </a>
+  </div>
+</header>
+
+
+<!-- ===== HEADER ===== -->
+<section class="loan-header">
+
+  <a href="{% url 'home' %}" class="back">🏠 Back to Home</a>
+
+  <h1>Agricultural Loan Information</h1>
+  <p>कृषि ऋण जानकारी</p>
+
+</section>
+
+
+<!-- ===== INFO BOX ===== -->
+<div class="loan-info">
+
+  <strong>🏦 Trusted Banking Partners</strong>
+  <p>
+    All loan information is verified and sourced from authorized banks and financial institutions.
+  </p>
+
+</div>
+
+
+<!-- ===== CATEGORY CARDS ===== -->
+<section class="loan-categories">
+
+  <div class="loan-cat green">
+    <h3>Credit Cards</h3>
+    <p>Low interest agricultural credit solutions</p>
+  </div>
+
+  <div class="loan-cat blue">
+    <h3>Crop Loans</h3>
+    <p>Short-term financing for cultivation</p>
+  </div>
+
+  <div class="loan-cat orange">
+    <h3>Equipment Loans</h3>
+    <p>Finance for tractors and machinery</p>
+  </div>
+
+</section>
+
+
+<!-- ===== LOAN CARDS ===== -->
+
+<div class="loan-container">
+
+  <!-- KCC -->
+  <div class="loan-card">
+    <div class="loan-left">
+
+      <h2>Kisan Credit Card (KCC)</h2>
+      <p>किसान क्रेडिट कार्ड</p>
+
+      <ul>
+        <li>Farmers with owned/leased land</li>
+        <li>Active farming</li>
+        <li>Valid KYC</li>
+      </ul>
+
+    </div>
+
+    <div class="loan-right">
+
+      <div class="rate">4% (with subsidy)</div>
+      <div class="time">12 months</div>
+
+    </div>
+  </div>
+
+
+  <!-- Crop Loan -->
+  <div class="loan-card">
+    <div class="loan-left">
+
+      <h2>Crop Loan</h2>
+      <p>फसल ऋण</p>
+
+      <ul>
+        <li>Land ownership</li>
+        <li>Income proof</li>
+        <li>Aadhar & PAN</li>
+      </ul>
+
+    </div>
+
+    <div class="loan-right">
+
+      <div class="rate">7% - 9%</div>
+      <div class="time">6-12 months</div>
+
+    </div>
+  </div>
+
+
+  <!-- Tractor Loan -->
+  <div class="loan-card">
+    <div class="loan-left">
+
+      <h2>Tractor Loan</h2>
+      <p>ट्रैक्टर ऋण</p>
+
+      <ul>
+        <li>Minimum 2 acres</li>
+        <li>Income proof</li>
+        <li>Down payment</li>
+      </ul>
+
+    </div>
+
+    <div class="loan-right">
+
+      <div class="rate">9% - 12%</div>
+      <div class="time">5-7 years</div>
+
+    </div>
+  </div>
+
+
+</div>
+
+</body>
+</html>
