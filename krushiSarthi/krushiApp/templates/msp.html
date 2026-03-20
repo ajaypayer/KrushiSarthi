@@ -1,9 +1,9 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>MSP Rates</title>
+  <title>{% trans "MSP Rates" %}</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
 </head>
 
@@ -12,17 +12,27 @@
 <!-- ===== NAVBAR ===== -->
 <header class="navbar">
    <div class="logo">
-    🌾 <b>Farmer Awareness Portal</b>
+    🌾 <b>{% trans "Farmer Awareness Portal" %}</b>
   </div>
 
 
   <div class="nav-right">
-    <button class="lang">EN</button>
-    <button class="lang">हिंदी</button>
-    <button class="lang">मराठी</button>
-
+    <form action="{% url 'set_language' %}" method="post" id="lang-form">
+      {% csrf_token %}
+      <input name="next" type="hidden" value="{{ redirect_to }}" />
+      <select name="language" onchange="document.getElementById('lang-form').submit();">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+          <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+            {{ language.name_local }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
     <a href="{% url 'home' %}">
-      <button class="login">Signup / Login</button>
+      <button class="login">{% trans "Signup / Login" %}</button>
     </a>
   </div>
 </header>
@@ -31,10 +41,10 @@
 <!-- ===== HEADER ===== -->
 <section class="msp-header">
 
-  <a href="{% url 'home' %}" class="back">🏠 Back to Home</a>
+  <a href="{% url 'home' %}" class="back">🏠 {% trans "Back to Home" %}</a>
 
-  <h1>MSP Rates - Minimum Support Price</h1>
-  <p>न्यूनतम समर्थन मूल्य</p>
+  <h1>{% trans "MSP Rates - Minimum Support Price" %}</h1>
+  <p>{% trans "न्यूनतम समर्थन मूल्य" %}</p>
 
 </section>
 
@@ -42,10 +52,9 @@
 <!-- ===== INFO ===== -->
 <div class="msp-info">
 
-  <strong>📈 Latest MSP Update - Government Approved Prices</strong>
+  <strong>📈 {% trans "Latest MSP Update - Government Approved Prices" %}</strong>
   <p>
-    These are official Minimum Support Prices announced by the Government of India.
-    Farmers can sell their produce at these rates or higher.
+    {% trans "These are official Minimum Support Prices announced by the Government of India. Farmers can sell their produce at these rates or higher." %}
   </p>
 
 </div>
@@ -55,22 +64,22 @@
 <div class="msp-filter">
 
   <div class="filter-box">
-    <label>Select Crop / फसल चुनें</label>
+    <label>{% trans "Select Crop  "%}</label>
     <select id="cropFilter">
-      <option value="all">All</option>
-      <option value="paddy">Paddy</option>
-      <option value="jowar">Jowar</option>
-      <option value="bajra">Bajra</option>
-      <option value="maize">Maize</option>
+      <option value="all">{% trans "All" %}</option>
+      <option value="paddy">{% trans "Paddy" %}</option>
+      <option value="jowar">{% trans "Jowar" %}</option>
+      <option value="bajra">{% trans "Bajra" %}</option>
+      <option value="maize">{% trans "Maize" %}</option>
     </select>
   </div>
 
   <div class="filter-box">
-    <label>Select Season / मौसम चुनें</label>
+    <label>{% trans "Select Season" %}</label>
     <select id="seasonFilter">
-      <option value="all">All Seasons</option>
-      <option value="kharif">Kharif</option>
-      <option value="rabi">Rabi</option>
+      <option value="all">{% trans "All Seasons" %}</option>
+      <option value="kharif">{% trans "Kharif" %}</option>
+      <option value="rabi">{% trans "Rabi" %}</option>
     </select>
   </div>
 
@@ -84,11 +93,11 @@
 
   <thead>
     <tr>
-      <th>Crop Name / फसल का नाम</th>
-      <th>Season</th>
-      <th>MSP Rate (₹/Quintal)</th>
-      <th>Year</th>
-      <th>Increase</th>
+      <th>{% trans "Crop Name " %}</th>
+      <th>{% trans "Season" %}</th>
+      <th>{% trans "MSP Rate (₹/Quintal)" %}</th>
+      <th>{% trans "Year" %}</th>
+      <th>{% trans "Increase" %}</th>
     </tr>
   </thead>
 
@@ -96,10 +105,10 @@
 
 <tr data-crop="paddy" data-season="kharif">
   <td>
-    <strong>Paddy (Common)</strong><br>
-    धान (सामान्य)
+    <strong>{% trans "Paddy (Common)" %}</strong><br>
+
   </td>
-  <td><span class="season kharif">Kharif</span></td>
+  <td><span class="season kharif">{% trans "Kharif" %}</span></td>
   <td class="price">₹2,183</td>
   <td>2024-25</td>
   <td class="inc">↗ 7%</td>
@@ -107,34 +116,33 @@
 
 <tr data-crop="paddy" data-season="kharif">
   <td>
-    <strong>Paddy (Grade A)</strong><br>
-    धान (ग्रेड A)
+    <strong>{% trans "Paddy (Grade A)" %}</strong><br>
   </td>
-  <td><span class="season kharif">Kharif</span></td>
+  <td><span class="season kharif">{% trans "Kharif" %}</span></td>
   <td class="price">₹2,203</td>
   <td>2024-25</td>
   <td class="inc">↗ 7%</td>
 </tr>
 
 <tr data-crop="jowar" data-season="kharif">
-  <td><strong>Jowar (Hybrid)</strong><br>ज्वार</td>
-  <td><span class="season kharif">Kharif</span></td>
+  <td><strong>{% trans "Jowar (Hybrid)" %}</strong><br> </td>
+  <td><span class="season kharif">{% trans "Kharif" %}</span></td>
   <td class="price">₹3,180</td>
   <td>2024-25</td>
   <td class="inc">↗ 8%</td>
 </tr>
 
 <tr data-crop="bajra" data-season="kharif">
-  <td><strong>Bajra</strong><br>बाजरा</td>
-  <td><span class="season kharif">Kharif</span></td>
+  <td><strong>{% trans "Bajra" %}</strong><br></td>
+  <td><span class="season kharif">{% trans "Kharif" %}</span></td>
   <td class="price">₹2,500</td>
   <td>2024-25</td>
   <td class="inc">↗ 7.6%</td>
 </tr>
 
 <tr data-crop="maize" data-season="kharif">
-  <td><strong>Maize</strong><br>मक्का</td>
-  <td><span class="season kharif">Kharif</span></td>
+  <td><strong>{% trans "Maize" %}</strong><br> </td>
+  <td><span class="season kharif">{% trans "Kharif" %}</span></td>
   <td class="price">₹2,090</td>
   <td>2024-25</td>
   <td class="inc">↗ 5%</td>

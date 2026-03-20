@@ -1,0 +1,43 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% trans "Admin Access" %}</title>
+  <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
+  <style>
+    body { background: #f1f6f0; font-family: Arial, sans-serif; }
+    .admin-login { width: min(620px, 95%); margin: 70px auto; background: #fff; border: 1px solid #b2dfdb; border-radius: 11px; box-shadow: 0 8px 20px rgba(0,0,0,.08); padding: 24px; text-align: center; }
+    .admin-login h1 { color: #2e7d32; margin-bottom: 15px; }
+    .admin-login label { font-weight: 700; display: block; text-align: left; margin: 8px 0 4px; }
+    .admin-login input { width: 100%; padding: 10px; border: 1px solid #b2dfdb; border-radius: 6px; margin-bottom: 12px; }
+    .admin-login button { background: #2e7d32; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; }
+    .admin-login .error { color: #d32f2f; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="admin-login">
+    <h1>{% trans "Admin Login" %}</h1>
+    <p>{% trans "Login to access the hidden admin management panel." %}</p>
+
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form id="adminLoginForm" method="post" onsubmit="return validateLoginForm()">
+      {% csrf_token %}
+      <label for="username">{% trans "Username" %}</label><br>
+      <input id="username" type="text" name="username" required><br><br>
+
+      <label for="password">{% trans "Password" %}</label><br>
+      <input id="password" type="password" name="password" required><br><br>
+
+      <button type="submit">{% trans "Login" %}</button>
+    </form>
+
+    <p>{% trans "Use the same credentials you set in the code" %}</p>
+    <p>{% trans "Default:" %} admin / password123</p>
+  </div>
+  <script src="{% static 'krushiApp/js/admin.js' %}"></script>
+</body>
+</html>

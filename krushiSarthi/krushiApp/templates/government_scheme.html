@@ -1,9 +1,9 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Government Schemes</title>
+  <title>{% trans "Government Schemes" %}</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
 </head>
 
@@ -12,45 +12,53 @@
 <header class="navbar">
 
   <div class="logo">
-    🌾 <b>Farmer Awareness Portal</b>
+    🌾 <b>{% trans "Farmer Awareness Portal" %}</b>
   </div>
 
   <div class="nav-right">
-
-    <button class="lang">EN</button>
-    <button class="lang">हिंदी</button>
-    <button class="lang">मराठी</button>
-
+    <form action="{% url 'set_language' %}" method="post" id="lang-form">
+      {% csrf_token %}
+      <input name="next" type="hidden" value="{{ redirect_to }}" />
+      <select name="language" onchange="document.getElementById('lang-form').submit();">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+          <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+            {{ language.name_local }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
     <a href="{% url 'home' %}">
-      <button class="login">Login / Admin</button>
+      <button class="login">{% trans "Login / Admin" %}</button>
     </a>
-
   </div>
 
 </header>
 <!-- PAGE HEADER -->
 <section class="page-header">
-  <a href="{% url 'home' %}">← Back to Home</a>
-  <h1>Government Schemes</h1>
-  <p>Find schemes based on your crop and category</p>
+  <a href="{% url 'home' %}">← {% trans "Back to Home" %}</a>
+  <h1>{% trans "Government Schemes" %}</h1>
+  <p>{% trans "Find schemes based on your crop and category" %}</p>
 </section>
 
 <!-- SEARCH + FILTER -->
 <div class="filter">
 
-  <input type="text" id="search" placeholder="Search schemes...">
+  <input type="text" id="search" placeholder="{% trans 'Search schemes...' %}">
 
   <select id="category">
-    <option value="all">All Schemes</option>
-    <option value="central">Central</option>
-    <option value="state">State</option>
+    <option value="all">{% trans "All Schemes" %}</option>
+    <option value="central">{% trans "Central" %}</option>
+    <option value="state">{% trans "State" %}</option>
   </select>
 
   <select id="crop">
-    <option value="all">All Crops</option>
-    <option value="wheat">Wheat</option>
-    <option value="rice">Rice</option>
-    <option value="allcrops">All Crops</option>
+    <option value="all">{% trans "All Crops" %}</option>
+    <option value="wheat">{% trans "Wheat" %}</option>
+    <option value="rice">{% trans "Rice" %}</option>
+    <option value="allcrops">{% trans "All Crops" %}</option>
   </select>
 
 </div>
@@ -64,24 +72,24 @@
        data-category="central" 
        data-crop="allcrops">
 
-    <h2>Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)</h2>
+    <h2>{% trans "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)" %}</h2>
 
-    <div class="tag">Central</div>
+    <div class="tag">{% trans "Central" %}</div>
 
-    <h4>Benefits</h4>
+    <h4>{% trans "Benefits" %}</h4>
     <ul>
-      <li>₹6000 per year</li>
-      <li>Direct bank transfer</li>
-      <li>No application fee</li>
+      <li>{% trans "₹6000 per year" %}</li>
+      <li>{% trans "Direct bank transfer" %}</li>
+      <li>{% trans "No application fee" %}</li>
     </ul>
 
-    <h4>Eligibility</h4>
+    <h4>{% trans "Eligibility" %}</h4>
     <ul>
-      <li>Small farmers</li>
-      <li>Own agricultural land</li>
+      <li>{% trans "Small farmers" %}</li>
+      <li>{% trans "Own agricultural land" %}</li>
     </ul>
 
-    <button>Apply Now</button>
+    <button>{% trans "Apply Now" %}</button>
   </div>
 
 
@@ -90,17 +98,17 @@
        data-category="central" 
        data-crop="rice">
 
-    <h2>Pradhan Mantri Fasal Bima Yojana</h2>
+    <h2>{% trans "Pradhan Mantri Fasal Bima Yojana" %}</h2>
 
-    <div class="tag">Central</div>
+    <div class="tag">{% trans "Central" %}</div>
 
-    <h4>Benefits</h4>
+    <h4>{% trans "Benefits" %}</h4>
     <ul>
-      <li>Crop insurance</li>
-      <li>Low premium</li>
+      <li>{% trans "Crop insurance" %}</li>
+      <li>{% trans "Low premium" %}</li>
     </ul>
 
-    <button>Apply Now</button>
+    <button>{% trans "Apply Now" %}</button>
   </div>
 
 
@@ -109,15 +117,15 @@
        data-category="state" 
        data-crop="wheat">
 
-    <h2>Soil Health Card Scheme</h2>
+    <h2>{% trans "Soil Health Card Scheme" %}</h2>
 
-    <div class="tag">State</div>
+    <div class="tag">{% trans "State" %}</div>
 
     <ul>
-      <li>Free soil testing</li>
+      <li>{% trans "Free soil testing" %}</li>
     </ul>
 
-    <button>Apply Now</button>
+    <button>{% trans "Apply Now" %}</button>
   </div>
 
 
@@ -126,15 +134,15 @@
        data-category="central" 
        data-crop="allcrops">
 
-    <h2>Kisan Credit Card</h2>
+    <h2>{% trans "Kisan Credit Card" %}</h2>
 
-    <div class="tag">Central</div>
+    <div class="tag">{% trans "Central" %}</div>
 
     <ul>
-      <li>Low interest loans</li>
+      <li>{% trans "Low interest loans" %}</li>
     </ul>
 
-    <button>Apply Now</button>
+    <button>{% trans "Apply Now" %}</button>
   </div>
 
 </section>
