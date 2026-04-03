@@ -1,126 +1,161 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Farmer Awareness Portal</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
+  <style>
+    /* Footer Style */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      color: #888;
+      font-size: 13px;
+    }
+
+    footer .hidden-link {
+      color: inherit;
+      text-decoration: none;
+      opacity: 0.15;
+      transition: opacity 0.3s;
+      cursor: default;
+    }
+
+    footer .hidden-link:hover {
+      opacity: 0.8;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ===== NAVBAR ===== -->
-<header class="navbar">
-  <div class="logo">
-    🌾 <b>Farmer Awareness Portal</b>
-  </div>
-
-  <div class="nav-right">
-    <button class="lang">EN</button>
-    <button class="lang">हिंदी</button>
-    <button class="lang">मराठी</button>
-    <button class="login">Login / Admin</button>
-  </div>
-</header>
-
-
-<!-- ===== HERO SECTION ===== -->
-<section class="hero">
-  <div class="hero-text">
-    <h1>One Platform for Farmer <br> Schemes, MSP & Loans</h1>
-    <p>Get verified government information in one place</p>
-   <a href="{% url 'government_schemes' %}">
-  <button>Explore Schemes</button>
-   </a>
-  </div>
-
-  <div class="hero-img">
-    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef" alt="farm">
-  </div>
-</section>
-
-
-<!-- ===== QUICK ACCESS SECTION ===== -->
-<section class="quick" id="quickSection">
-
-  <h2>Quick Access</h2>
-
-  <div class="cards">
-
-   <a href="{% url 'government_schemes' %}" class="card-link">
-      <div class="card">
-      <div class="icon blue">📄</div>
-      <h3>Government Schemes</h3>
-      <p>Find and apply for schemes</p>
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <div class="logo">
+      🌾 <b>Farmer Awareness Portal</b>
     </div>
+
+    <div class="nav-right">
+      <button class="lang">EN</button>
+      <button class="lang">हिंदी</button>
+      <button class="lang">मराठी</button>
+
+      <a href="{% url 'farmer_register' %}">
+        <button class="login">Register</button>
+      </a>
+    </div>
+  </header>
+
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>One Platform for Farmer <br> Schemes, MSP & Loans</h1>
+      <p>Get verified government information in one place</p>
+      <a href="{% url 'government_schemes' %}">
+        <button>Explore Schemes</button>
+      </a>
+    </div>
+
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef" alt="farm">
+    </div>
+  </section>
+
+
+  <!-- ===== QUICK ACCESS SECTION ===== -->
+  <section class="quick" id="quickSection">
+
+    <h2>Quick Access</h2>
+
+    <div class="cards">
+
+      <a href="{% url 'government_schemes' %}" class="card-link">
+        <div class="card">
+          <div class="icon blue">📄</div>
+          <h3>Government Schemes</h3>
+          <p>Find and apply for schemes</p>
+        </div>
+      </a>
+
+      <a href="{% url 'msp' %}" class="card-link">
+        <div class="card">
+          <div class="icon green">🌾</div>
+          <h3>MSP Rates</h3>
+          <p>Latest crop prices</p>
+        </div>
+      </a>
+
+      <a href="{% url 'agriloans' %}" class="card-link">
+        <div class="card">
+          <div class="icon orange">💰</div>
+          <h3>Loan Information</h3>
+          <p>Agricultural loans & KCC</p>
+        </div>
+      </a>
+      <a href="{% url 'chatbot' %}" class="card-link">
+        <div class="card">
+          <div class="icon purple">💬</div>
+          <h3>Ask Farmer Chatbot</h3>
+          <p>Get instant help</p>
+        </div>
+      </a>
+    </div>
+
+  </section>
+  <!-- ===== FEATURES SECTION ===== -->
+  <section class="features">
+
+    <div class="feature">
+
+      <div class="feature-icon">
+        📄
+      </div>
+
+      <h3>Verified Information</h3>
+      <p>Government-approved schemes and data</p>
+
+    </div>
+
+
+    <div class="feature">
+
+      <div class="feature-icon">
+        🌾
+      </div>
+
+      <h3>Updated MSP Rates</h3>
+      <p>Latest minimum support prices</p>
+
+    </div>
+
+
+    <div class="feature">
+
+      <div class="feature-icon">
+        💬
+      </div>
+
+      <h3>24/7 Support</h3>
+      <p>AI-powered chatbot assistance</p>
+
+    </div>
+
+  </section>
+
+  <footer>
+    <a href="{% url 'custom_admin_login' %}" class="hidden-link">
+      created by Ajay payer & Maitry santoshwar
     </a>
+  </footer>
 
-   <a href="{% url 'msp' %}" class="card-link"> 
-     <div class="card">
-      <div class="icon green">🌾</div>
-      <h3>MSP Rates</h3>
-      <p>Latest crop prices</p>
-    </div>
-    </a>
-
-    <a href="{% url 'agriloans' %}" class="card-link">
-       <div class="card">
-      <div class="icon orange">💰</div>
-      <h3>Loan Information</h3>
-      <p>Agricultural loans & KCC</p>
-    </div>
-    </a>
-   <a href="{% url 'chatbot' %}" class="card-link">
-      <div class="card">
-      <div class="icon purple">💬</div>
-      <h3>Ask Farmer Chatbot</h3>
-      <p>Get instant help</p>
-    </div>
-   </a>
-  </div>
-
-</section>
-<!-- ===== FEATURES SECTION ===== -->
-<section class="features">
-
-  <div class="feature">
-
-    <div class="feature-icon">
-      📄
-    </div>
-
-    <h3>Verified Information</h3>
-    <p>Government-approved schemes and data</p>
-
-  </div>
-
-
-  <div class="feature">
-
-    <div class="feature-icon">
-      🌾
-    </div>
-
-    <h3>Updated MSP Rates</h3>
-    <p>Latest minimum support prices</p>
-
-  </div>
-
-
-  <div class="feature">
-
-    <div class="feature-icon">
-      💬
-    </div>
-
-    <h3>24/7 Support</h3>
-    <p>AI-powered chatbot assistance</p>
-
-  </div>
-
-</section>
-<script src="{% static 'krushiApp/js/app.js' %}"></script>
+  <script src="{% static 'krushiApp/js/app.js' %}"></script>
 
 </body>
+
 </html>

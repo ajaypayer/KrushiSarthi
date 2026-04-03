@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel - Krushi Sarthi</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#f3f4f6;
+}
+
+/* TOP NAVBAR */
+.navbar{
+    height:70px;
+    background:#2e7d32;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 40px;
+}
+.logo{
+    font-size:20px;
+    font-weight:600;
+}
+.nav-right button a {
+    text-decoration: none;
+    color: inherit;
+}
+.nav-right button{
+    margin-left:12px;
+    padding:8px 18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:500;
+}
+.signup-btn{ background:white; color:#2e7d32; }
+.login-btn{ background:#f9a825; color:white; }
+
+/* SIDEBAR */
+.sidebar{
+    width:240px;
+    background:#2e7d32;
+    height:calc(100vh - 70px);
+    position:fixed;
+    top:70px;
+    left:0;
+    padding:30px 20px;
+    color:white;
+}
+.sidebar h3{
+    margin-bottom:30px;
+}
+.sidebar a {
+    text-decoration: none;
+}
+.sidebar button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    margin-bottom:15px;
+    cursor:pointer;
+    font-weight:500;
+    text-align: center;
+    color: white;
+}
+.home-btn{ background:#f9a825; }
+.menu-btn{ background:#ffffff20; }
+.menu-btn:hover { background:#ffffff40; }
+.logout-btn{ background:red; margin-top:30px; }
+
+/* MAIN CONTENT */
+.main{
+    margin-left:260px;
+    padding:40px;
+}
+.title{
+    font-size:30px;
+    font-weight:600;
+}
+.subtitle{
+    color:#666;
+    margin-bottom:25px;
+}
+
+.add-btn{
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    margin-bottom:25px;
+    cursor:pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* TABLE */
+.table-card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.05);
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+th, td{
+    padding:16px;
+    text-align:left;
+}
+th{
+    background:#f0f0f0;
+}
+tr{
+    border-bottom:1px solid #eee;
+}
+.badge{
+    padding:5px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:500;
+}
+.badge-blue{ background:#e3f2fd; color:#1565c0; }
+.badge-green{ background:#e8f5e9; color:#2e7d32; }
+.badge-purple{ background:#f3e5f5; color:#6a1b9a; }
+
+.action-btn{
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    margin-right:6px;
+    cursor:pointer;
+    text-decoration: none;
+    color: black;
+}
+.edit-btn{ background:#e3f2fd; }
+.delete-btn{ background:#ffebee; }
+
+/* FORM STYLES */
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">🌾 Farmer Awareness Portal</div>
+    <div class="nav-right">
+        {% if request.user.is_authenticated %}
+            <span>Welcome, {{ request.user.username }}</span>
+        {% else %}
+            <button class="signup-btn">Register</button>
+        {% endif %}
+    </div>
+</div>
+
+<div class="sidebar">
+    <h3>Admin Panel</h3>
+    <a href="{% url 'home' %}"><button class="home-btn">Back to Home</button></a>
+    <a href="{% url 'custom_admin_schemes' %}"><button class="menu-btn">Manage Schemes</button></a>
+    <a href="{% url 'custom_admin_msps' %}"><button class="menu-btn">Update MSP Data</button></a>
+    <a href="{% url 'custom_admin_loans' %}"><button class="menu-btn">Manage Loans</button></a>
+    <a href="{% url 'custom_admin_logout' %}"><button class="logout-btn">Logout</button></a>
+</div>
+
+<div class="main">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

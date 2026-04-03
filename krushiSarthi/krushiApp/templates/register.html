@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Farmer Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            width: 100%;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #1b5e20;
+        }
+
+        .success-msg {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+            border: 1px solid #c8e6c9;
+        }
+
+        .footer-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .footer-link a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="title">Farmer Registration</div>
+
+        {% if success %}
+        <div class="success-msg">
+            ✅ Registered successfully! You will now receive alerts for new schemes and MSP rates.
+        </div>
+        {% endif %}
+
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            Register your mobile number to get instant updates about farming schemes and prices.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div style="color: #d32f2f; font-size: 12px; margin-top: 5px;">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+
+        <div class="footer-link">
+            <a href="{% url 'home' %}">Back to Home</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,145 +1,159 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Government Schemes</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
+  <style>
+    /* Card Enhancements */
+    .scheme-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .scheme-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      font-weight: 600;
+      color: #2e7d32;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .content-text {
+      color: #555;
+      font-size: 14.5px;
+      line-height: 1.5;
+    }
+
+    /* Footer Style */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      color: #888;
+      font-size: 13px;
+    }
+
+    footer .hidden-link {
+      color: inherit;
+      text-decoration: none;
+      opacity: 0.15;
+      transition: opacity 0.3s;
+      cursor: default;
+    }
+
+    footer .hidden-link:hover {
+      opacity: 0.8;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="navbar">
+  <header class="navbar">
 
-  <div class="logo">
-    🌾 <b>Farmer Awareness Portal</b>
+    <div class="logo">
+      🌾 <b>Farmer Awareness Portal</b>
+    </div>
+
+    <div class="nav-right">
+
+      <button class="lang">EN</button>
+      <button class="lang">हिंदी</button>
+      <button class="lang">मराठी</button>
+
+      <a href="{% url 'farmer_register' %}">
+        <button class="login">Register</button>
+      </a>
+
+    </div>
+
+  </header>
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <a href="{% url 'home' %}">Back to Home</a>
+    <h1>Government Schemes</h1>
+    <p>Find schemes based on your crop and category</p>
+  </section>
+
+  <!-- SEARCH + FILTER -->
+  <div class="filter">
+
+    <input type="text" id="search" placeholder="Search schemes...">
+
+    <select id="category">
+      <option value="all">All Schemes</option>
+      <option value="central">Central</option>
+      <option value="state">State</option>
+    </select>
+
   </div>
 
-  <div class="nav-right">
 
-    <button class="lang">EN</button>
-    <button class="lang">हिंदी</button>
-    <button class="lang">मराठी</button>
+  <!-- SCHEME LIST -->
+  <section class="schemes" id="schemeList">
 
-    <a href="{% url 'home' %}">
-      <button class="login">Login / Admin</button>
+    {% for scheme in schemes %}
+    <div class="scheme-card" data-category="{{ scheme.scheme_type|lower }}">
+
+      <h2>{{ scheme.name }}</h2>
+
+      <div class="tag">{{ scheme.scheme_type }}</div>
+
+      {% if scheme.description %}
+      <span class="section-title">Overview</span>
+      <div class="content-text">{{ scheme.description|linebreaks }}</div>
+      {% endif %}
+
+      {% if scheme.benefits %}
+      <span class="section-title">Benefits</span>
+      <div class="content-text">{{ scheme.benefits|linebreaks }}</div>
+      {% endif %}
+
+      {% if scheme.eligibility %}
+      <span class="section-title">Eligibility</span>
+      <div class="content-text">{{ scheme.eligibility|linebreaks }}</div>
+      {% endif %}
+
+      <div style="margin-top: 15px; font-size: 13px; color: #888; border-top: 1px solid #eee; padding-top: 10px;">
+        Last Updated: {{ scheme.last_updated }}
+      </div>
+
+      {% if scheme.apply_url %}
+      <a href="{{ scheme.apply_url }}" target="_blank">
+        <button
+          style="margin-top: 15px; width: 100%; border: none; background: #2e7d32; color: white; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+          Apply Now </button>
+      </a>
+      {% else %}
+      <button
+        style="margin-top: 15px; width: 100%; border: none; background: #ccc; color: white; padding: 10px; border-radius: 6px; cursor: not-allowed;"
+        disabled> Apply Link Unavailable </button>
+      {% endif %}
+    </div>
+    {% empty %}
+    <div style="text-align: center; width: 100%; padding: 40px;">
+      <h3>No schemes available at the moment.</h3>
+      <p>Please check back later.</p>
+    </div>
+    {% endfor %}
+
+  </section>
+
+  <footer>
+    <a href="{% url 'custom_admin_login' %}" class="hidden-link">
+      created by Ajay payer & Maitry santoshwar
     </a>
+  </footer>
 
-  </div>
-
-</header>
-<!-- PAGE HEADER -->
-<section class="page-header">
-  <a href="{% url 'home' %}">← Back to Home</a>
-  <h1>Government Schemes</h1>
-  <p>Find schemes based on your crop and category</p>
-</section>
-
-<!-- SEARCH + FILTER -->
-<div class="filter">
-
-  <input type="text" id="search" placeholder="Search schemes...">
-
-  <select id="category">
-    <option value="all">All Schemes</option>
-    <option value="central">Central</option>
-    <option value="state">State</option>
-  </select>
-
-  <select id="crop">
-    <option value="all">All Crops</option>
-    <option value="wheat">Wheat</option>
-    <option value="rice">Rice</option>
-    <option value="allcrops">All Crops</option>
-  </select>
-
-</div>
-
-
-<!-- SCHEME LIST -->
-<section class="schemes" id="schemeList">
-
-  <!-- PM KISAN -->
-  <div class="scheme-card" 
-       data-category="central" 
-       data-crop="allcrops">
-
-    <h2>Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)</h2>
-
-    <div class="tag">Central</div>
-
-    <h4>Benefits</h4>
-    <ul>
-      <li>₹6000 per year</li>
-      <li>Direct bank transfer</li>
-      <li>No application fee</li>
-    </ul>
-
-    <h4>Eligibility</h4>
-    <ul>
-      <li>Small farmers</li>
-      <li>Own agricultural land</li>
-    </ul>
-
-    <button>Apply Now</button>
-  </div>
-
-
-  <!-- PMFBY -->
-  <div class="scheme-card" 
-       data-category="central" 
-       data-crop="rice">
-
-    <h2>Pradhan Mantri Fasal Bima Yojana</h2>
-
-    <div class="tag">Central</div>
-
-    <h4>Benefits</h4>
-    <ul>
-      <li>Crop insurance</li>
-      <li>Low premium</li>
-    </ul>
-
-    <button>Apply Now</button>
-  </div>
-
-
-  <!-- Soil Health -->
-  <div class="scheme-card" 
-       data-category="state" 
-       data-crop="wheat">
-
-    <h2>Soil Health Card Scheme</h2>
-
-    <div class="tag">State</div>
-
-    <ul>
-      <li>Free soil testing</li>
-    </ul>
-
-    <button>Apply Now</button>
-  </div>
-
-
-  <!-- KCC -->
-  <div class="scheme-card" 
-       data-category="central" 
-       data-crop="allcrops">
-
-    <h2>Kisan Credit Card</h2>
-
-    <div class="tag">Central</div>
-
-    <ul>
-      <li>Low interest loans</li>
-    </ul>
-
-    <button>Apply Now</button>
-  </div>
-
-</section>
-
-
-<script src="{% static 'krushiApp/js/app.js' %}"></script>
+  <script src="{% static 'krushiApp/js/app.js' %}"></script>
 </body>
+
 </html>

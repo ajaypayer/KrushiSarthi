@@ -11,7 +11,7 @@
 
 <!-- ===== NAVBAR ===== -->
 <header class="navbar">
-   <div class="logo">
+  <div class="logo">
     🌾 <b>Farmer Awareness Portal</b>
   </div>
 
@@ -19,16 +19,16 @@
     <button class="lang">EN</button>
     <button class="lang">हिंदी</button>
     <button class="lang">मराठी</button>
-    <a href="{% url 'home' %}">
-      <button class="login">Signup / Login</button>
-    </a>
+    <a href="{% url 'farmer_register' %}">
+        <button class="login">Register</button>
+      </a>
   </div>
 </header>
 
 
 <!-- ===== HEADER ===== -->
 <section class="chat-header">
-  <a href="{% url 'home' %}" class="back">🏠 Back to Home</a>
+  <a href="{% url 'home' %}" class="back">Back to Home</a>
 
   <div class="chat-title">
     <div class="chat-icon">💬</div>

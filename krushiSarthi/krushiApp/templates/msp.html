@@ -1,150 +1,173 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>MSP Rates</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
+  <style>
+    /* Table Styling */
+    .inc-badge {
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .year-text {
+      color: #666;
+      font-size: 13px;
+    }
+
+    .price-text {
+      color: #2e7d32;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    /* Footer Style */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      color: #888;
+      font-size: 13px;
+    }
+
+    footer .hidden-link {
+      color: inherit;
+      text-decoration: none;
+      opacity: 0.15;
+      transition: opacity 0.3s;
+      cursor: default;
+    }
+
+    footer .hidden-link:hover {
+      opacity: 0.8;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ===== NAVBAR ===== -->
-<header class="navbar">
-   <div class="logo">
-    🌾 <b>Farmer Awareness Portal</b>
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <div class="logo">
+      🌾 <b>Farmer Awareness Portal</b>
+    </div>
+
+
+    <div class="nav-right">
+      <button class="lang">EN</button>
+      <button class="lang">हिंदी</button>
+      <button class="lang">मराठी</button>
+
+      <a href="{% url 'farmer_register' %}">
+        <button class="login">Register</button>
+      </a>
+    </div>
+  </header>
+
+
+  <!-- ===== HEADER ===== -->
+  <section class="msp-header">
+
+    <a href="{% url 'home' %}" class="back">Back to Home</a>
+
+    <h1>MSP Rates - Minimum Support Price</h1>
+    <p>न्यूनतम समर्थन मूल्य</p>
+
+  </section>
+
+
+  <!-- ===== INFO ===== -->
+  <div class="msp-info">
+
+    <strong>📈 Latest MSP Update - Government Approved Prices</strong>
+    <p>
+      These are official Minimum Support Prices announced by the Government of India.
+      Farmers can sell their produce at these rates or higher.
+    </p>
+
   </div>
 
 
-  <div class="nav-right">
-    <button class="lang">EN</button>
-    <button class="lang">हिंदी</button>
-    <button class="lang">मराठी</button>
+  <!-- ===== FILTER ===== -->
+  <div class="msp-filter">
 
-    <a href="{% url 'home' %}">
-      <button class="login">Signup / Login</button>
+    <div class="filter-box">
+      <label>Search Crop / फसल </label>
+      <input type="text" id="cropFilter" placeholder="e.g. Paddy"
+        style="padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+    </div>
+
+    <div class="filter-box">
+      <label>Select Season / मौसम </label>
+      <select id="seasonFilter">
+        <option value="all">All Seasons</option>
+        <option value="kharif">Kharif</option>
+        <option value="rabi">Rabi</option>
+      </select>
+    </div>
+
+  </div>
+
+
+  <!-- ===== TABLE ===== -->
+  <div class="msp-table">
+
+    <table id="mspTable">
+
+      <thead>
+        <tr>
+          <th>Crop Name / फसल का नाम</th>
+          <th>Season</th>
+          <th>MSP Rate (₹/Quintal)</th>
+          <th>Year</th>
+          <th>Increase</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        {% for m in msps %}
+        <tr data-crop="{{ m.crop_name|lower }}" data-season="{{ m.season|lower }}">
+          <td>
+            <strong>{{ m.crop_name }}</strong>
+          </td>
+          <td><span class="season {{ m.season|lower }}">{{ m.season }}</span></td>
+          <td class="price-text">₹{{ m.rate }}</td>
+          <td class="year-text">{{ m.year }}</td>
+          <td class="inc">
+            {% if m.percentage_increase %}
+            <span class="inc-badge">↗ {{ m.percentage_increase }}</span>
+            {% else %}
+            -
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" style="text-align: center; padding: 20px;">No MSP data available.</td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+
+    </table>
+  </div>
+
+  <footer>
+    <a href="{% url 'custom_admin_login' %}" class="hidden-link">
+      created by Ajay payer & Maitry santoshwar
     </a>
-  </div>
-</header>
+  </footer>
 
-
-<!-- ===== HEADER ===== -->
-<section class="msp-header">
-
-  <a href="{% url 'home' %}" class="back">🏠 Back to Home</a>
-
-  <h1>MSP Rates - Minimum Support Price</h1>
-  <p>न्यूनतम समर्थन मूल्य</p>
-
-</section>
-
-
-<!-- ===== INFO ===== -->
-<div class="msp-info">
-
-  <strong>📈 Latest MSP Update - Government Approved Prices</strong>
-  <p>
-    These are official Minimum Support Prices announced by the Government of India.
-    Farmers can sell their produce at these rates or higher.
-  </p>
-
-</div>
-
-
-<!-- ===== FILTER ===== -->
-<div class="msp-filter">
-
-  <div class="filter-box">
-    <label>Select Crop / फसल चुनें</label>
-    <select id="cropFilter">
-      <option value="all">All</option>
-      <option value="paddy">Paddy</option>
-      <option value="jowar">Jowar</option>
-      <option value="bajra">Bajra</option>
-      <option value="maize">Maize</option>
-    </select>
-  </div>
-
-  <div class="filter-box">
-    <label>Select Season / मौसम चुनें</label>
-    <select id="seasonFilter">
-      <option value="all">All Seasons</option>
-      <option value="kharif">Kharif</option>
-      <option value="rabi">Rabi</option>
-    </select>
-  </div>
-
-</div>
-
-
-<!-- ===== TABLE ===== -->
-<div class="msp-table">
-
-<table id="mspTable">
-
-  <thead>
-    <tr>
-      <th>Crop Name / फसल का नाम</th>
-      <th>Season</th>
-      <th>MSP Rate (₹/Quintal)</th>
-      <th>Year</th>
-      <th>Increase</th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-<tr data-crop="paddy" data-season="kharif">
-  <td>
-    <strong>Paddy (Common)</strong><br>
-    धान (सामान्य)
-  </td>
-  <td><span class="season kharif">Kharif</span></td>
-  <td class="price">₹2,183</td>
-  <td>2024-25</td>
-  <td class="inc">↗ 7%</td>
-</tr>
-
-<tr data-crop="paddy" data-season="kharif">
-  <td>
-    <strong>Paddy (Grade A)</strong><br>
-    धान (ग्रेड A)
-  </td>
-  <td><span class="season kharif">Kharif</span></td>
-  <td class="price">₹2,203</td>
-  <td>2024-25</td>
-  <td class="inc">↗ 7%</td>
-</tr>
-
-<tr data-crop="jowar" data-season="kharif">
-  <td><strong>Jowar (Hybrid)</strong><br>ज्वार</td>
-  <td><span class="season kharif">Kharif</span></td>
-  <td class="price">₹3,180</td>
-  <td>2024-25</td>
-  <td class="inc">↗ 8%</td>
-</tr>
-
-<tr data-crop="bajra" data-season="kharif">
-  <td><strong>Bajra</strong><br>बाजरा</td>
-  <td><span class="season kharif">Kharif</span></td>
-  <td class="price">₹2,500</td>
-  <td>2024-25</td>
-  <td class="inc">↗ 7.6%</td>
-</tr>
-
-<tr data-crop="maize" data-season="kharif">
-  <td><strong>Maize</strong><br>मक्का</td>
-  <td><span class="season kharif">Kharif</span></td>
-  <td class="price">₹2,090</td>
-  <td>2024-25</td>
-  <td class="inc">↗ 5%</td>
-</tr>
-
-  </tbody>
-
-</table>
-</div>
-
-<script src="{% static 'krushiApp/js/app.js' %}"></script>
+  <script src="{% static 'krushiApp/js/app.js' %}"></script>
 </body>
+
 </html>

@@ -1,0 +1,36 @@
+{% extends 'custom_admin/custom_admin_base.html' %}
+
+{% block content %}
+<div class="title">Manage Loans</div>
+<div class="subtitle">Manage and update agriculture loan information</div>
+
+<a href="{% url 'custom_admin_loan_add' %}" class="add-btn">+ Add New Loan Scheme</a>
+
+<div class="table-card">
+    <table>
+        <tr>
+            <th>Bank Name</th>
+            <th>Loan Name</th>
+            <th>Interest Rate (%)</th>
+            <th>Actions</th>
+        </tr>
+        
+        {% for loan in loans %}
+        <tr>
+            <td>{{ loan.bank_name }}</td>
+            <td>{{ loan.loan_name }}</td>
+            <td>{{ loan.interest_rate }}%</td>
+            <td>
+                <a href="{% url 'custom_admin_loan_edit' loan.id %}" class="action-btn edit-btn">✏</a>
+                <a href="{% url 'custom_admin_loan_delete' loan.id %}" class="action-btn delete-btn" onclick="return confirm('Are you sure you want to delete this loan scheme?');">🗑</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" style="text-align: center;">No loan schemes found.</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+{% endblock %}

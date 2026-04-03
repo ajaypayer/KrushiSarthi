@@ -1,152 +1,225 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Agricultural Loan</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
+  <style>
+    .loan-category-section {
+      margin-top: 40px;
+    }
+
+    .section-header {
+      background: #f8f9fa;
+      padding: 15px 30px;
+      border-left: 5px solid #2e7d32;
+      margin-bottom: 20px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #2e7d32;
+    }
+
+    .loan-card {
+      transition: transform 0.2s;
+    }
+
+    .loan-card:hover {
+      transform: scale(1.01);
+    }
+
+    .duration-badge {
+      background: #e3f2fd;
+      color: #1565c0;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .apply-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .apply-btn.disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Footer Style */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      color: #888;
+      font-size: 13px;
+    }
+
+    footer .hidden-link {
+      color: inherit;
+      text-decoration: none;
+      opacity: 0.15;
+      transition: opacity 0.3s;
+      cursor: default;
+    }
+
+    footer .hidden-link:hover {
+      opacity: 0.8;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ===== NAVBAR ===== -->
-<header class="navbar">
-  <div class="logo">
-    🌾 <b>Farmer Awareness Portal</b>
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <div class="logo">
+      🌾 <b>Farmer Awareness Portal</b>
+    </div>
+
+    <div class="nav-right">
+      <button class="lang">EN</button>
+      <button class="lang">हिंदी</button>
+      <button class="lang">मराठी</button>
+
+      <a href="{% url 'farmer_register' %}">
+        <button class="login">Register</button>
+      </a>
+    </div>
+  </header>
+
+
+  <!-- ===== HEADER ===== -->
+  <section class="loan-header">
+
+    <a href="{% url 'home' %}" class="back">Back to Home</a>
+
+    <h1>Agricultural Loan Information</h1>
+    <p>कृषि ऋण जानकारी</p>
+
+  </section>
+
+
+  <!-- ===== INFO BOX ===== -->
+  <div class="loan-info">
+
+    <strong>🏦 Trusted Banking Partners</strong>
+    <p>
+      All loan information is verified and sourced from authorized banks and financial institutions.
+    </p>
+
   </div>
 
-  <div class="nav-right">
-    <button class="lang">EN</button>
-    <button class="lang">हिंदी</button>
-    <button class="lang">मराठी</button>
 
-    <a href="{% url 'home' %}">
-      <button class="login">Signup / Login</button>
+  <!-- ===== LOAN CATEGORIES ===== -->
+
+  <div class="loan-container">
+
+    <!-- Credit Cards -->
+    <div class="loan-category-section">
+      <div class="section-header">Credit Cards</div>
+      {% for loan in loans %}
+      {% if loan.category == 'Credit Cards' %}
+      <div class="loan-card">
+        <div class="loan-left">
+          <h2>{{ loan.loan_name }}</h2>
+          <p>{{ loan.bank_name }}</p>
+          <div class="details" style="margin-top: 15px; color: #555;">{{ loan.details|linebreaks }}</div>
+
+          {% if loan.apply_url %}
+          <a href="{{ loan.apply_url }}" target="_blank" class="apply-btn">Apply Now</a>
+          {% else %}
+          <span class="apply-btn disabled">Apply Unavailable</span>
+          {% endif %}
+        </div>
+        <div class="loan-right">
+          <div class="rate" style="font-size: 24px; font-weight: bold; color: #2e7d32;">{{ loan.interest_rate }}%</div>
+          {% if loan.duration %}
+          <div class="duration-badge">{{ loan.duration }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Crop Loans -->
+    <div class="loan-category-section">
+      <div class="section-header">Crop Loans</div>
+      {% for loan in loans %}
+      {% if loan.category == 'Crop Loans' %}
+      <div class="loan-card">
+        <div class="loan-left">
+          <h2>{{ loan.loan_name }}</h2>
+          <p>{{ loan.bank_name }}</p>
+          <div class="details" style="margin-top: 15px; color: #555;">{{ loan.details|linebreaks }}</div>
+
+          {% if loan.apply_url %}
+          <a href="{{ loan.apply_url }}" target="_blank" class="apply-btn">Apply Now</a>
+          {% else %}
+          <span class="apply-btn disabled">Apply Unavailable</span>
+          {% endif %}
+        </div>
+        <div class="loan-right">
+          <div class="rate" style="font-size: 24px; font-weight: bold; color: #2e7d32;">{{ loan.interest_rate }}%</div>
+          {% if loan.duration %}
+          <div class="duration-badge">{{ loan.duration }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Equipment Loans -->
+    <div class="loan-category-section">
+      <div class="section-header">Equipment Loans</div>
+      {% for loan in loans %}
+      {% if loan.category == 'Equipment Loans' %}
+      <div class="loan-card">
+        <div class="loan-left">
+          <h2>{{ loan.loan_name }}</h2>
+          <p>{{ loan.bank_name }}</p>
+          <div class="details" style="margin-top: 15px; color: #555;">{{ loan.details|linebreaks }}</div>
+
+          {% if loan.apply_url %}
+          <a href="{{ loan.apply_url }}" target="_blank" class="apply-btn">Apply Now</a>
+          {% else %}
+          <span class="apply-btn disabled">Apply Unavailable</span>
+          {% endif %}
+        </div>
+        <div class="loan-right">
+          <div class="rate" style="font-size: 24px; font-weight: bold; color: #2e7d32;">{{ loan.interest_rate }}%</div>
+          {% if loan.duration %}
+          <div class="duration-badge">{{ loan.duration }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+
+
+  </div>
+
+  <footer>
+    <a href="{% url 'custom_admin_login' %}" class="hidden-link">
+      created by Ajay payer & Maitry santoshwar
     </a>
-  </div>
-</header>
-
-
-<!-- ===== HEADER ===== -->
-<section class="loan-header">
-
-  <a href="{% url 'home' %}" class="back">🏠 Back to Home</a>
-
-  <h1>Agricultural Loan Information</h1>
-  <p>कृषि ऋण जानकारी</p>
-
-</section>
-
-
-<!-- ===== INFO BOX ===== -->
-<div class="loan-info">
-
-  <strong>🏦 Trusted Banking Partners</strong>
-  <p>
-    All loan information is verified and sourced from authorized banks and financial institutions.
-  </p>
-
-</div>
-
-
-<!-- ===== CATEGORY CARDS ===== -->
-<section class="loan-categories">
-
-  <div class="loan-cat green">
-    <h3>Credit Cards</h3>
-    <p>Low interest agricultural credit solutions</p>
-  </div>
-
-  <div class="loan-cat blue">
-    <h3>Crop Loans</h3>
-    <p>Short-term financing for cultivation</p>
-  </div>
-
-  <div class="loan-cat orange">
-    <h3>Equipment Loans</h3>
-    <p>Finance for tractors and machinery</p>
-  </div>
-
-</section>
-
-
-<!-- ===== LOAN CARDS ===== -->
-
-<div class="loan-container">
-
-  <!-- KCC -->
-  <div class="loan-card">
-    <div class="loan-left">
-
-      <h2>Kisan Credit Card (KCC)</h2>
-      <p>किसान क्रेडिट कार्ड</p>
-
-      <ul>
-        <li>Farmers with owned/leased land</li>
-        <li>Active farming</li>
-        <li>Valid KYC</li>
-      </ul>
-
-    </div>
-
-    <div class="loan-right">
-
-      <div class="rate">4% (with subsidy)</div>
-      <div class="time">12 months</div>
-
-    </div>
-  </div>
-
-
-  <!-- Crop Loan -->
-  <div class="loan-card">
-    <div class="loan-left">
-
-      <h2>Crop Loan</h2>
-      <p>फसल ऋण</p>
-
-      <ul>
-        <li>Land ownership</li>
-        <li>Income proof</li>
-        <li>Aadhar & PAN</li>
-      </ul>
-
-    </div>
-
-    <div class="loan-right">
-
-      <div class="rate">7% - 9%</div>
-      <div class="time">6-12 months</div>
-
-    </div>
-  </div>
-
-
-  <!-- Tractor Loan -->
-  <div class="loan-card">
-    <div class="loan-left">
-
-      <h2>Tractor Loan</h2>
-      <p>ट्रैक्टर ऋण</p>
-
-      <ul>
-        <li>Minimum 2 acres</li>
-        <li>Income proof</li>
-        <li>Down payment</li>
-      </ul>
-
-    </div>
-
-    <div class="loan-right">
-
-      <div class="rate">9% - 12%</div>
-      <div class="time">5-7 years</div>
-
-    </div>
-  </div>
-
-
-</div>
+  </footer>
 
 </body>
+
 </html>
