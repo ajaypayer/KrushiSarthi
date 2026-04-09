@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>Agricultural Loan</title>
+  <title>{% trans "Agricultural Loan" %}</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
   <style>
     .loan-category-section {
@@ -86,16 +87,28 @@
   <!-- ===== NAVBAR ===== -->
   <header class="navbar">
     <div class="logo">
-      🌾 <b>Farmer Awareness Portal</b>
+      🌾 <b>{% trans "Farmer Awareness Portal" %}</b>
     </div>
 
     <div class="nav-right">
-      <button class="lang">EN</button>
-      <button class="lang">हिंदी</button>
-      <button class="lang">मराठी</button>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="en">
+        <button type="submit" class="lang">EN</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="hi">
+        <button type="submit" class="lang">हिंदी</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="mr">
+        <button type="submit" class="lang">मराठी</button>
+      </form>
 
       <a href="{% url 'farmer_register' %}">
-        <button class="login">Register</button>
+        <button class="login">{% trans "Register" %}</button>
       </a>
     </div>
   </header>
@@ -104,10 +117,9 @@
   <!-- ===== HEADER ===== -->
   <section class="loan-header">
 
-    <a href="{% url 'home' %}" class="back">Back to Home</a>
+    <a href="{% url 'home' %}" class="back">{% trans "Back to Home" %}</a>
 
-    <h1>Agricultural Loan Information</h1>
-    <p>कृषि ऋण जानकारी</p>
+    <h1>{% trans "Agricultural Loan Information" %} </h1>
 
   </section>
 
@@ -115,9 +127,9 @@
   <!-- ===== INFO BOX ===== -->
   <div class="loan-info">
 
-    <strong>🏦 Trusted Banking Partners</strong>
+    <strong>🏦 {% trans "Trusted Banking Partners" %}</strong>
     <p>
-      All loan information is verified and sourced from authorized banks and financial institutions.
+      {% trans "All loan information is verified and sourced from authorized banks and financial institutions." %}
     </p>
 
   </div>
@@ -129,7 +141,7 @@
 
     <!-- Credit Cards -->
     <div class="loan-category-section">
-      <div class="section-header">Credit Cards</div>
+      <div class="section-header">{% trans "Credit Cards" %}</div>
       {% for loan in loans %}
       {% if loan.category == 'Credit Cards' %}
       <div class="loan-card">
@@ -139,9 +151,9 @@
           <div class="details" style="margin-top: 15px; color: #555;">{{ loan.details|linebreaks }}</div>
 
           {% if loan.apply_url %}
-          <a href="{{ loan.apply_url }}" target="_blank" class="apply-btn">Apply Now</a>
+          <a href="{{ loan.apply_url }}" target="_blank" class="apply-btn">{% trans "Apply Now" %}</a>
           {% else %}
-          <span class="apply-btn disabled">Apply Unavailable</span>
+          <span class="apply-btn disabled">{% trans "Apply Unavailable" %}</span>
           {% endif %}
         </div>
         <div class="loan-right">
@@ -157,7 +169,7 @@
 
     <!-- Crop Loans -->
     <div class="loan-category-section">
-      <div class="section-header">Crop Loans</div>
+      <div class="section-header">{% trans "Crop Loans" %}</div>
       {% for loan in loans %}
       {% if loan.category == 'Crop Loans' %}
       <div class="loan-card">
@@ -167,9 +179,9 @@
           <div class="details" style="margin-top: 15px; color: #555;">{{ loan.details|linebreaks }}</div>
 
           {% if loan.apply_url %}
-          <a href="{{ loan.apply_url }}" target="_blank" class="apply-btn">Apply Now</a>
+          <a href="{{ loan.apply_url }}" target="_blank" class="apply-btn">{% trans "Apply Now" %}</a>
           {% else %}
-          <span class="apply-btn disabled">Apply Unavailable</span>
+          <span class="apply-btn disabled">{% trans "Apply Unavailable" %}</span>
           {% endif %}
         </div>
         <div class="loan-right">
@@ -185,7 +197,7 @@
 
     <!-- Equipment Loans -->
     <div class="loan-category-section">
-      <div class="section-header">Equipment Loans</div>
+      <div class="section-header">{% trans "Equipment Loans" %}</div>
       {% for loan in loans %}
       {% if loan.category == 'Equipment Loans' %}
       <div class="loan-card">
@@ -195,9 +207,9 @@
           <div class="details" style="margin-top: 15px; color: #555;">{{ loan.details|linebreaks }}</div>
 
           {% if loan.apply_url %}
-          <a href="{{ loan.apply_url }}" target="_blank" class="apply-btn">Apply Now</a>
+          <a href="{{ loan.apply_url }}" target="_blank" class="apply-btn">{% trans "Apply Now" %}</a>
           {% else %}
-          <span class="apply-btn disabled">Apply Unavailable</span>
+          <span class="apply-btn disabled">{% trans "Apply Unavailable" %}</span>
           {% endif %}
         </div>
         <div class="loan-right">

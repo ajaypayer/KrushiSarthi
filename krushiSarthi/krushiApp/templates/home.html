@@ -1,11 +1,12 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Farmer Awareness Portal</title>
+  <title>{% trans "Farmer Awareness Portal" %}</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
   <style>
     /* Footer Style */
@@ -37,16 +38,28 @@
   <!-- ===== NAVBAR ===== -->
   <header class="navbar">
     <div class="logo">
-      🌾 <b>Farmer Awareness Portal</b>
+      🌾 <b>{% trans "Farmer Awareness Portal" %}</b>
     </div>
 
     <div class="nav-right">
-      <button class="lang">EN</button>
-      <button class="lang">हिंदी</button>
-      <button class="lang">मराठी</button>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="en">
+        <button type="submit" class="lang">EN</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="hi">
+        <button type="submit" class="lang">हिंदी</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="mr">
+        <button type="submit" class="lang">मराठी</button>
+      </form>
 
       <a href="{% url 'farmer_register' %}">
-        <button class="login">Register</button>
+        <button class="login">{% trans "Register" %}</button>
       </a>
     </div>
   </header>
@@ -55,10 +68,10 @@
   <!-- ===== HERO SECTION ===== -->
   <section class="hero">
     <div class="hero-text">
-      <h1>One Platform for Farmer <br> Schemes, MSP & Loans</h1>
-      <p>Get verified government information in one place</p>
+      <h1>{% trans "One Platform for Farmer" %} <br> {% trans "Schemes, MSP & Loans" %}</h1>
+      <p>{% trans "Get verified government information in one place" %}</p>
       <a href="{% url 'government_schemes' %}">
-        <button>Explore Schemes</button>
+        <button>{% trans "Explore Schemes" %}</button>
       </a>
     </div>
 
@@ -71,38 +84,38 @@
   <!-- ===== QUICK ACCESS SECTION ===== -->
   <section class="quick" id="quickSection">
 
-    <h2>Quick Access</h2>
+    <h2>{% trans "Quick Access" %}</h2>
 
     <div class="cards">
 
       <a href="{% url 'government_schemes' %}" class="card-link">
         <div class="card">
           <div class="icon blue">📄</div>
-          <h3>Government Schemes</h3>
-          <p>Find and apply for schemes</p>
+          <h3>{% trans "Government Schemes" %}</h3>
+          <p>{% trans "Find and apply for schemes" %}</p>
         </div>
       </a>
 
       <a href="{% url 'msp' %}" class="card-link">
         <div class="card">
           <div class="icon green">🌾</div>
-          <h3>MSP Rates</h3>
-          <p>Latest crop prices</p>
+          <h3>{% trans "MSP Rates" %}</h3>
+          <p>{% trans "Latest crop prices" %}</p>
         </div>
       </a>
 
       <a href="{% url 'agriloans' %}" class="card-link">
         <div class="card">
           <div class="icon orange">💰</div>
-          <h3>Loan Information</h3>
-          <p>Agricultural loans & KCC</p>
+          <h3>{% trans "Loan Information" %}</h3>
+          <p>{% trans "Agricultural loans & KCC" %}</p>
         </div>
       </a>
       <a href="{% url 'chatbot' %}" class="card-link">
         <div class="card">
           <div class="icon purple">💬</div>
-          <h3>Ask Farmer Chatbot</h3>
-          <p>Get instant help</p>
+          <h3>{% trans "Ask Farmer Chatbot" %}</h3>
+          <p>{% trans "Get instant help" %}</p>
         </div>
       </a>
     </div>
@@ -117,8 +130,8 @@
         📄
       </div>
 
-      <h3>Verified Information</h3>
-      <p>Government-approved schemes and data</p>
+      <h3>{% trans "Verified Information" %}</h3>
+      <p>{% trans "Government-approved schemes and data" %}</p>
 
     </div>
 
@@ -129,8 +142,8 @@
         🌾
       </div>
 
-      <h3>Updated MSP Rates</h3>
-      <p>Latest minimum support prices</p>
+      <h3>{% trans "Updated MSP Rates" %}</h3>
+      <p>{% trans "Latest minimum support prices" %}</p>
 
     </div>
 
@@ -141,8 +154,8 @@
         💬
       </div>
 
-      <h3>24/7 Support</h3>
-      <p>AI-powered chatbot assistance</p>
+      <h3>{% trans "24/7 Support" %}</h3>
+      <p>{% trans "AI-powered chatbot assistance" %}</p>
 
     </div>
 

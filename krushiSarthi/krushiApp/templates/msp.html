@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>MSP Rates</title>
+  <title>{% trans "MSP Rates" %}</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
   <style>
     /* Table Styling */
@@ -57,17 +58,29 @@
   <!-- ===== NAVBAR ===== -->
   <header class="navbar">
     <div class="logo">
-      🌾 <b>Farmer Awareness Portal</b>
+      🌾 <b>{% trans "Farmer Awareness Portal" %}</b>
     </div>
 
 
     <div class="nav-right">
-      <button class="lang">EN</button>
-      <button class="lang">हिंदी</button>
-      <button class="lang">मराठी</button>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="en">
+        <button type="submit" class="lang">EN</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="hi">
+        <button type="submit" class="lang">हिंदी</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="mr">
+        <button type="submit" class="lang">मराठी</button>
+      </form>
 
       <a href="{% url 'farmer_register' %}">
-        <button class="login">Register</button>
+        <button class="login">{% trans "Register" %}</button>
       </a>
     </div>
   </header>
@@ -76,10 +89,9 @@
   <!-- ===== HEADER ===== -->
   <section class="msp-header">
 
-    <a href="{% url 'home' %}" class="back">Back to Home</a>
+    <a href="{% url 'home' %}" class="back">{% trans "Back to Home" %}</a>
 
-    <h1>MSP Rates - Minimum Support Price</h1>
-    <p>न्यूनतम समर्थन मूल्य</p>
+    <h1>{% trans "MSP Rates - Minimum Support Price" %} </h1>
 
   </section>
 
@@ -87,10 +99,10 @@
   <!-- ===== INFO ===== -->
   <div class="msp-info">
 
-    <strong>📈 Latest MSP Update - Government Approved Prices</strong>
+    <strong>📈 {% trans "Latest MSP Update - Government Approved Prices" %}</strong>
     <p>
-      These are official Minimum Support Prices announced by the Government of India.
-      Farmers can sell their produce at these rates or higher.
+      {% trans "These are official Minimum Support Prices announced by the Government of India." %}
+      {% trans "Farmers can sell their produce at these rates or higher." %}
     </p>
 
   </div>
@@ -100,17 +112,17 @@
   <div class="msp-filter">
 
     <div class="filter-box">
-      <label>Search Crop / फसल </label>
-      <input type="text" id="cropFilter" placeholder="e.g. Paddy"
+      <label>{% trans "Search Crop" %}</label>
+      <input type="text" id="cropFilter" placeholder="{% trans 'e.g. Paddy' %}"
         style="padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
     </div>
 
     <div class="filter-box">
-      <label>Select Season / मौसम </label>
+      <label>{% trans "Select Season" %}</label>
       <select id="seasonFilter">
-        <option value="all">All Seasons</option>
-        <option value="kharif">Kharif</option>
-        <option value="rabi">Rabi</option>
+        <option value="all">{% trans "All Seasons" %}</option>
+        <option value="kharif">{% trans "Kharif" %}</option>
+        <option value="rabi">{% trans "Rabi" %}</option>
       </select>
     </div>
 
@@ -124,11 +136,11 @@
 
       <thead>
         <tr>
-          <th>Crop Name / फसल का नाम</th>
-          <th>Season</th>
-          <th>MSP Rate (₹/Quintal)</th>
-          <th>Year</th>
-          <th>Increase</th>
+          <th>{% trans "Crop Name" %}</th>
+          <th>{% trans "Season" %}</th>
+          <th>{% trans "MSP Rate (₹/Quintal)" %}</th>
+          <th>{% trans "Year" %}</th>
+          <th>{% trans "Increase" %}</th>
         </tr>
       </thead>
 
@@ -152,7 +164,7 @@
         </tr>
         {% empty %}
         <tr>
-          <td colspan="5" style="text-align: center; padding: 20px;">No MSP data available.</td>
+          <td colspan="5" style="text-align: center; padding: 20px;">{% trans "No MSP data available." %}</td>
         </tr>
         {% endfor %}
 

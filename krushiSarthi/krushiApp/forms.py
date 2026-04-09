@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from .models import GovernmentScheme, MspRate, AgriLoan, Farmer
 
 class GovernmentSchemeForm(forms.ModelForm):
@@ -45,9 +46,15 @@ class FarmerForm(forms.ModelForm):
     class Meta:
         model = Farmer
         fields = ['name', 'mobile_number', 'email', 'location']
+        labels = {
+            'name': _('Name'),
+            'mobile_number': _('Mobile number'),
+            'email': _('Email'),
+            'location': _('Location'),
+        }
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your full name'}),
-            'mobile_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter mobile number'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter email (optional)'}),
-            'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your state/location'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Enter your full name')}),
+            'mobile_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Enter mobile number')}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': _('Enter email (optional)')}),
+            'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Enter your state/location')}),
         }

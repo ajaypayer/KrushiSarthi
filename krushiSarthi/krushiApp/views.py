@@ -4,6 +4,21 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import GovernmentScheme, MspRate, AgriLoan, Farmer
 from .forms import GovernmentSchemeForm, MspRateForm, AgriLoanForm, FarmerForm
+import requests
+
+def translate_text(text, dest_lang):
+    if dest_lang == 'en' or not text:
+        return text
+    try:
+        url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl={dest_lang}&dt=t&q={requests.utils.quote(text)}"
+        response = requests.get(url, timeout=5)
+        if response.status_code == 200:
+            result = response.json()
+            return result[0][0][0]
+        else:
+            return text
+    except:
+        return text
 
 def _common_context():
     return {'year': timezone.now().year}
@@ -14,18 +29,34 @@ def home(request):
 
 def government_schemes(request):
     schemes = GovernmentScheme.objects.all().order_by('-last_updated')
+    lang = request.LANGUAGE_CODE
+    for scheme in schemes:
+        scheme.name = translate_text(scheme.name, lang)
+        scheme.description = translate_text(scheme.description, lang)
+        scheme.benefits = translate_text(scheme.benefits, lang)
+        scheme.eligibility = translate_text(scheme.eligibility, lang)
+        scheme.scheme_type = translate_text(scheme.scheme_type, lang)
     context = _common_context()
     context['schemes'] = schemes
     return render(request, 'government_scheme.html', context)
 
 def msp(request):
     msps = MspRate.objects.all().order_by('crop_name')
+    lang = request.LANGUAGE_CODE
+    for msp in msps:
+        msp.crop_name = translate_text(msp.crop_name, lang)
+        msp.season = translate_text(msp.season, lang)
     context = _common_context()
     context['msps'] = msps
     return render(request, 'msp.html', context)
 
 def agriloans(request):
     loans = AgriLoan.objects.all()
+    lang = request.LANGUAGE_CODE
+    for loan in loans:
+        loan.bank_name = translate_text(loan.bank_name, lang)
+        loan.loan_name = translate_text(loan.loan_name, lang)
+        loan.duration = translate_text(loan.duration, lang)
     context = _common_context()
     context['loans'] = loans
     return render(request, 'agriloans.html', context)

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Farmer Registration</title>
+    <title>{% trans "Farmer Registration" %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -97,16 +98,16 @@
 
 <body>
     <div class="card">
-        <div class="title">Farmer Registration</div>
+        <div class="title">{% trans "Farmer Registration" %}</div>
 
         {% if success %}
         <div class="success-msg">
-            ✅ Registered successfully! You will now receive alerts for new schemes and MSP rates.
+            ✅ {% trans "Registered successfully! You will now receive alerts for new schemes and MSP rates." %}
         </div>
         {% endif %}
 
         <p style="text-align: center; color: #666; margin-bottom: 30px;">
-            Register your mobile number to get instant updates about farming schemes and prices.
+            {% trans "Register your mobile number to get instant updates about farming schemes and prices." %}
         </p>
 
         <form method="POST">
@@ -122,11 +123,11 @@
             </div>
             {% endfor %}
 
-            <button type="submit" class="btn">Register</button>
+            <button type="submit" class="btn">{% trans "Register" %}</button>
         </form>
 
         <div class="footer-link">
-            <a href="{% url 'home' %}">Back to Home</a>
+            <a href="{% url 'home' %}">{% trans "Back to Home" %}</a>
         </div>
     </div>
 

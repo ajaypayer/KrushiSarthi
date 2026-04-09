@@ -1,0 +1,333 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-09 23:34+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\krushiApp\forms.py:50
+msgid "Name"
+msgstr "नाम"
+#: .\krushiApp\forms.py:51
+msgid "Mobile number"
+msgstr "मोबाइल नंबर"
+#: .\krushiApp\forms.py:52
+msgid "Email"
+msgstr "ईमेल"
+#: .\krushiApp\forms.py:53
+msgid "Location"
+msgstr "जगह"
+#: .\krushiApp\forms.py:56
+msgid "Enter your full name"
+msgstr "अपना पूरा नाम भरें"
+#: .\krushiApp\forms.py:57
+msgid "Enter mobile number"
+msgstr "मोबाइल नंबर दर्ज करें"
+#: .\krushiApp\forms.py:58
+msgid "Enter email (optional)"
+msgstr "ईमेल दर्ज करें (वैकल्पिक)"
+#: .\krushiApp\forms.py:59
+msgid "Enter your state/location"
+msgstr "अपना राज्य/स्थान दर्ज करें"
+#: .\krushiApp\templates\agriloans.html:8
+#, fuzzy
+#| msgid "Agricultural loans & KCC"
+msgid "Agricultural Loan"
+msgstr "कृषि ऋण और केसीसी"
+#: .\krushiApp\templates\agriloans.html:90
+#: .\krushiApp\templates\chatbot.html:16
+#: .\krushiApp\templates\government_scheme.html:64
+#: .\krushiApp\templates\home.html:9 .\krushiApp\templates\home.html:41
+#: .\krushiApp\templates\msp.html:61
+msgid "Farmer Awareness Portal"
+msgstr "किसान जागरूकता पोर्टल"
+#: .\krushiApp\templates\agriloans.html:111
+#: .\krushiApp\templates\chatbot.html:36
+#: .\krushiApp\templates\government_scheme.html:85
+#: .\krushiApp\templates\home.html:62 .\krushiApp\templates\msp.html:83
+#: .\krushiApp\templates\register.html:126
+msgid "Register"
+msgstr "पंजीकरण"
+#: .\krushiApp\templates\agriloans.html:120
+#: .\krushiApp\templates\chatbot.html:44
+#: .\krushiApp\templates\government_scheme.html:93
+#: .\krushiApp\templates\msp.html:92 .\krushiApp\templates\register.html:130
+msgid "Back to Home"
+msgstr "घर पर वापस"
+#: .\krushiApp\templates\agriloans.html:122
+#, fuzzy
+#| msgid "Loan Information"
+msgid "Agricultural Loan Information"
+msgstr "कृषी ऋण जानकारी"
+#: .\krushiApp\templates\agriloans.html:130
+msgid "Trusted Banking Partners"
+msgstr "विश्वसनीय बैंकिंग भागीदार"
+#: .\krushiApp\templates\agriloans.html:132
+msgid ""
+"All loan information is verified and sourced from authorized banks and "
+"financial institutions."
+msgstr ""
+"सभी ऋण संबंधी जानकारी अधिकृत बैंकों और वित्तीय संस्थानों से सत्यापित और प्राप्त की जाती है।"
+#: .\krushiApp\templates\agriloans.html:144
+msgid "Credit Cards"
+msgstr "क्रेडिट कार्ड"
+#: .\krushiApp\templates\agriloans.html:154
+#: .\krushiApp\templates\agriloans.html:182
+#: .\krushiApp\templates\agriloans.html:210
+#: .\krushiApp\templates\government_scheme.html:145
+msgid "Apply Now"
+msgstr "अभी अप्लाई करें"
+#: .\krushiApp\templates\agriloans.html:156
+#: .\krushiApp\templates\agriloans.html:184
+#: .\krushiApp\templates\agriloans.html:212
+#, fuzzy
+#| msgid "Apply Link Unavailable"
+msgid "Apply Unavailable"
+msgstr "अप्लाई करने के लिए लिंक उपलब्ध नहीं है"
+#: .\krushiApp\templates\agriloans.html:172
+msgid "Crop Loans"
+msgstr "फसल ऋण"
+#: .\krushiApp\templates\agriloans.html:200
+msgid "Equipment Loans"
+msgstr "उपकरण ऋण"
+#: .\krushiApp\templates\chatbot.html:7 .\krushiApp\templates\chatbot.html:49
+#, fuzzy
+#| msgid "Ask Farmer Chatbot"
+msgid "Farmer Chatbot"
+msgstr "किसान चैटबॉट"
+#: .\krushiApp\templates\chatbot.html:54
+msgid "Ask me anything about schemes, MSP, loans, and farming information."
+msgstr "योजनाओं, एमएसपी, ऋण और कृषि जानकारी के बारे में मुझे कुछ भी पूछें।"
+#: .\krushiApp\templates\chatbot.html:66
+#, fuzzy
+#| msgid "Ask me anything about schemes, MSP, loans, and farming information."
+msgid ""
+"Hello Farmer How can I help you today? I can answer about schemes, MSP, "
+"loans and farming."
+msgstr "नमस्ते किसान, मैं आपकी आज कैसे मदद कर सकता हूँ? मैं योजनाओं, एमएसपी, ऋण और कृषि के बारे में उत्तर दे सकता हूँ।"
+#: .\krushiApp\templates\chatbot.html:76
+msgid "Suggested Questions:"
+msgstr "सुझाए गए प्रश्न:"
+#: .\krushiApp\templates\chatbot.html:78
+msgid "Which schemes am I eligible for?"
+msgstr "मैं किन योजनाओं के लिए पात्र हूं?"
+#: .\krushiApp\templates\chatbot.html:79
+msgid "What is MSP for wheat?"
+msgstr "गेहूं के लिए एमएसपी क्या है?"
+#: .\krushiApp\templates\chatbot.html:80
+msgid "Tell about Kisan Credit Card"
+msgstr "किसान क्रेडिट कार्ड के बारे में बताएं"
+#: .\krushiApp\templates\chatbot.html:81
+msgid "How to apply crop insurance?"
+msgstr "फसल बीमा कैसे लागू करें?"
+#: .\krushiApp\templates\chatbot.html:82
+msgid "Interest rates for crop loans?"
+msgstr "फसल ऋण के लिए ब्याज दरें?"
+#: .\krushiApp\templates\chatbot.html:90
+msgid "Type your question here..."
+msgstr "अपना प्रश्न यहां टाइप करें..."
+#: .\krushiApp\templates\chatbot.html:92
+msgid "Send"
+msgstr "भेजना"
+#: .\krushiApp\templates\chatbot.html:103
+msgid "24/7 Available"
+msgstr "24/7 उपलब्ध"
+#: .\krushiApp\templates\chatbot.html:104
+msgid "Get help anytime"
+msgstr "कभी भी मदद प्राप्त करें"
+#: .\krushiApp\templates\chatbot.html:108
+msgid "AI Powered"
+msgstr "एआई संचालित"
+#: .\krushiApp\templates\chatbot.html:109
+msgid "Smart responses"
+msgstr "स्मार्ट प्रतिक्रियाएं"
+#: .\krushiApp\templates\chatbot.html:113
+#, fuzzy
+#| msgid "24/7 Support"
+msgid "Voice Support"
+msgstr "24/7 सहायता"
+#: .\krushiApp\templates\chatbot.html:114
+msgid "Coming soon"
+msgstr "जल्द आ रहा है"
+#: .\krushiApp\templates\government_scheme.html:8
+#: .\krushiApp\templates\government_scheme.html:94
+#: .\krushiApp\templates\home.html:94
+msgid "Government Schemes"
+msgstr "सरकारी योजनाएं"
+#: .\krushiApp\templates\government_scheme.html:95
+msgid "Find schemes based on your crop and category"
+msgstr "अपनी फसल और श्रेणी के आधार पर योजनाएं खोजें"
+#: .\krushiApp\templates\government_scheme.html:101
+msgid "Search schemes..."
+msgstr "योजनाएं खोजें..."
+#: .\krushiApp\templates\government_scheme.html:104
+#, fuzzy
+#| msgid "Explore Schemes"
+msgid "All Schemes"
+msgstr "योजनाओं का अन्वेषण करें"
+#: .\krushiApp\templates\government_scheme.html:105
+msgid "Central"
+msgstr "मध्य"
+#: .\krushiApp\templates\government_scheme.html:106
+msgid "State"
+msgstr "राज्य"
+#: .\krushiApp\templates\government_scheme.html:123
+msgid "Overview"
+msgstr "सिंहावलोकन"
+#: .\krushiApp\templates\government_scheme.html:128
+msgid "Benefits"
+msgstr "फ़ायदे"
+#: .\krushiApp\templates\government_scheme.html:133
+msgid "Eligibility"
+msgstr "पात्रता"
+#: .\krushiApp\templates\government_scheme.html:138
+msgid "Last Updated"
+msgstr "आखरी अपडेट"
+#: .\krushiApp\templates\government_scheme.html:150
+msgid "Apply Link Unavailable"
+msgstr "अप्लाई करने के लिए लिंक उपलब्ध नहीं है"
+#: .\krushiApp\templates\government_scheme.html:155
+msgid "No schemes available at the moment."
+msgstr "फिलहाल कोई योजना उपलब्ध नहीं है."
+#: .\krushiApp\templates\government_scheme.html:156
+msgid "Please check back later."
+msgstr "कृपया फिर से बाद में जाँच करें।"
+#: .\krushiApp\templates\home.html:71
+msgid "One Platform for Farmer"
+msgstr "किसानों के लिए एक मंच"
+#: .\krushiApp\templates\home.html:71
+msgid "Schemes, MSP & Loans"
+msgstr "योजनाएं, एमएसपी और ऋण"
+#: .\krushiApp\templates\home.html:72
+msgid "Get verified government information in one place"
+msgstr "एक जगह पर सत्यापित सरकारी जानकारी प्राप्त करें"
+#: .\krushiApp\templates\home.html:74
+msgid "Explore Schemes"
+msgstr "योजनाओं का अन्वेषण करें"
+#: .\krushiApp\templates\home.html:87
+msgid "Quick Access"
+msgstr "त्वरित पहुंच"
+#: .\krushiApp\templates\home.html:95
+msgid "Find and apply for schemes"
+msgstr "योजनाओं को खोजें और आवेदन करें"
+#: .\krushiApp\templates\home.html:102 .\krushiApp\templates\msp.html:8
+msgid "MSP Rates"
+msgstr "एमएसपी दरें"
+#: .\krushiApp\templates\home.html:103
+msgid "Latest crop prices"
+msgstr "नवीनतम फसल कीमतें"
+#: .\krushiApp\templates\home.html:110
+msgid "Loan Information"
+msgstr "ऋण जानकारी"
+#: .\krushiApp\templates\home.html:111
+msgid "Agricultural loans & KCC"
+msgstr "कृषि ऋण और केसीसी"
+#: .\krushiApp\templates\home.html:117
+msgid "Ask Farmer Chatbot"
+msgstr "किसान चैटबॉट से पूछें"
+#: .\krushiApp\templates\home.html:118
+msgid "Get instant help"
+msgstr "तत्काल मदद प्राप्त करें"
+#: .\krushiApp\templates\home.html:133
+msgid "Verified Information"
+msgstr "सत्यापित जानकारी"
+#: .\krushiApp\templates\home.html:134
+msgid "Government-approved schemes and data"
+msgstr "सरकारी-अनुमोदित योजनाएं और डेटा"
+#: .\krushiApp\templates\home.html:145
+msgid "Updated MSP Rates"
+msgstr "अपडेटेड एमएसपी दरें"
+#: .\krushiApp\templates\home.html:146
+msgid "Latest minimum support prices"
+msgstr "नवीनतम न्यूनतम समर्थन मूल्य"
+#: .\krushiApp\templates\home.html:157
+msgid "24/7 Support"
+msgstr "24/7 सहायता"
+#: .\krushiApp\templates\home.html:158
+msgid "AI-powered chatbot assistance"
+msgstr "एआई-संचालित चैटबॉट सहायता"
+#: .\krushiApp\templates\msp.html:94
+#, fuzzy
+#| msgid "Latest minimum support prices"
+msgid "MSP Rates - Minimum Support Price"
+msgstr "एमएसपी दर - दर - न्यूनतम समर्थन मूल्य"
+#: .\krushiApp\templates\msp.html:102
+msgid "Latest MSP Update - Government Approved Prices"
+msgstr "नवीनतम एमएसपी अपडेट - सरकार द्वारा अनुमोदित कीमतें"
+#: .\krushiApp\templates\msp.html:104
+msgid ""
+"These are official Minimum Support Prices announced by the Government of "
+"India."
+msgstr "ये भारत सरकार द्वारा घोषित आधिकारिक न्यूनतम समर्थन मूल्य हैं।"
+#: .\krushiApp\templates\msp.html:105
+msgid "Farmers can sell their produce at these rates or higher."
+msgstr "किसान अपनी उपज इन दरों या इससे अधिक पर बेच सकते हैं।"
+#: .\krushiApp\templates\msp.html:115
+msgid "Search Crop / फसल"
+msgstr "फसल खोजें / फसलसल"
+#: .\krushiApp\templates\msp.html:116
+msgid "e.g. Paddy"
+msgstr "जैसे धान का खेत"
+#: .\krushiApp\templates\msp.html:121
+msgid "Select Season / मौसम"
+msgstr "मौसम चुनें / मौसमम"
+#: .\krushiApp\templates\msp.html:123
+msgid "All Seasons"
+msgstr "सभी मौसम"
+#: .\krushiApp\templates\msp.html:124
+msgid "Kharif"
+msgstr "ख़रीफ़"
+#: .\krushiApp\templates\msp.html:125
+msgid "Rabi"
+msgstr "रबी"
+#: .\krushiApp\templates\msp.html:139
+msgid "Crop Name / फसल का नाम"
+msgstr "फसल का नाम / / फसल का नाम"
+#: .\krushiApp\templates\msp.html:140
+msgid "Season"
+msgstr "मौसम"
+#: .\krushiApp\templates\msp.html:141
+msgid "MSP Rate (₹/Quintal)"
+msgstr "एमएसपी दर (₹/क्विंटल)"
+#: .\krushiApp\templates\msp.html:142
+msgid "Year"
+msgstr "वर्ष"
+#: .\krushiApp\templates\msp.html:143
+msgid "Increase"
+msgstr "बढ़ोतरी"
+#: .\krushiApp\templates\msp.html:167
+msgid "No MSP data available."
+msgstr "कोई एमएसपी डेटा उपलब्ध नहीं है."
+#: .\krushiApp\templates\register.html:7
+#: .\krushiApp\templates\register.html:101
+msgid "Farmer Registration"
+msgstr "किसान पंजीकरण"
+#: .\krushiApp\templates\register.html:105
+msgid ""
+"Registered successfully! You will now receive alerts for new schemes and MSP "
+"rates."
+msgstr "सफलतापूर्वक पंजीकृत! अब आपको नई योजनाओं और एमएसपी दरों के लिए अलर्ट प्राप्त होंगे।"
+#: .\krushiApp\templates\register.html:110
+msgid ""
+"Register your mobile number to get instant updates about farming schemes and "
+"prices."
+msgstr ""
+"कृषि योजनाओं और कीमतों के बारे में तुरंत अपडेट पाने के लिए अपना मोबाइल नंबर पंजीकृत करें।"
+#~ msgid "कृषि ऋण जानकारी"
+#~ msgstr "कृषि ऋण जानकारी"
+#~ msgid "किसान चैटबोट सहायक"
+#~ msgstr "किसान चैटबोट सहायक"
+#~ msgid "न्यूनतम समर्थन मूल्य"
+#~ msgstr "न्यूनतम समर्थित मूल्य"

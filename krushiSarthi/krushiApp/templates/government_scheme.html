@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>Government Schemes</title>
+  <title>{% trans "Government Schemes" %}</title>
   <link rel="stylesheet" href="{% static 'krushiApp/css/style.css' %}">
   <style>
     /* Card Enhancements */
@@ -60,17 +61,28 @@
   <header class="navbar">
 
     <div class="logo">
-      🌾 <b>Farmer Awareness Portal</b>
+      🌾 <b>{% trans "Farmer Awareness Portal" %}</b>
     </div>
 
     <div class="nav-right">
-
-      <button class="lang">EN</button>
-      <button class="lang">हिंदी</button>
-      <button class="lang">मराठी</button>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="en">
+        <button type="submit" class="lang">EN</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="hi">
+        <button type="submit" class="lang">हिंदी</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="language" type="hidden" value="mr">
+        <button type="submit" class="lang">मराठी</button>
+      </form>
 
       <a href="{% url 'farmer_register' %}">
-        <button class="login">Register</button>
+        <button class="login">{% trans "Register" %}</button>
       </a>
 
     </div>
@@ -78,20 +90,20 @@
   </header>
   <!-- PAGE HEADER -->
   <section class="page-header">
-    <a href="{% url 'home' %}">Back to Home</a>
-    <h1>Government Schemes</h1>
-    <p>Find schemes based on your crop and category</p>
+    <a href="{% url 'home' %}">{% trans "Back to Home" %}</a>
+    <h1>{% trans "Government Schemes" %}</h1>
+    <p>{% trans "Find schemes based on your crop and category" %}</p>
   </section>
 
   <!-- SEARCH + FILTER -->
   <div class="filter">
 
-    <input type="text" id="search" placeholder="Search schemes...">
+    <input type="text" id="search" placeholder="{% trans 'Search schemes...' %}">
 
     <select id="category">
-      <option value="all">All Schemes</option>
-      <option value="central">Central</option>
-      <option value="state">State</option>
+      <option value="all">{% trans "All Schemes" %}</option>
+      <option value="central">{% trans "Central" %}</option>
+      <option value="state">{% trans "State" %}</option>
     </select>
 
   </div>
@@ -108,40 +120,40 @@
       <div class="tag">{{ scheme.scheme_type }}</div>
 
       {% if scheme.description %}
-      <span class="section-title">Overview</span>
+      <span class="section-title">{% trans "Overview" %}</span>
       <div class="content-text">{{ scheme.description|linebreaks }}</div>
       {% endif %}
 
       {% if scheme.benefits %}
-      <span class="section-title">Benefits</span>
+      <span class="section-title">{% trans "Benefits" %}</span>
       <div class="content-text">{{ scheme.benefits|linebreaks }}</div>
       {% endif %}
 
       {% if scheme.eligibility %}
-      <span class="section-title">Eligibility</span>
+      <span class="section-title">{% trans "Eligibility" %}</span>
       <div class="content-text">{{ scheme.eligibility|linebreaks }}</div>
       {% endif %}
 
       <div style="margin-top: 15px; font-size: 13px; color: #888; border-top: 1px solid #eee; padding-top: 10px;">
-        Last Updated: {{ scheme.last_updated }}
+        {% trans "Last Updated" %}: {{ scheme.last_updated }}
       </div>
 
       {% if scheme.apply_url %}
       <a href="{{ scheme.apply_url }}" target="_blank">
         <button
           style="margin-top: 15px; width: 100%; border: none; background: #2e7d32; color: white; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-          Apply Now </button>
+          {% trans "Apply Now" %}</button>
       </a>
       {% else %}
       <button
         style="margin-top: 15px; width: 100%; border: none; background: #ccc; color: white; padding: 10px; border-radius: 6px; cursor: not-allowed;"
-        disabled> Apply Link Unavailable </button>
+        disabled>{% trans "Apply Link Unavailable" %}</button>
       {% endif %}
     </div>
     {% empty %}
     <div style="text-align: center; width: 100%; padding: 40px;">
-      <h3>No schemes available at the moment.</h3>
-      <p>Please check back later.</p>
+      <h3>{% trans "No schemes available at the moment." %}</h3>
+      <p>{% trans "Please check back later." %}</p>
     </div>
     {% endfor %}
 
