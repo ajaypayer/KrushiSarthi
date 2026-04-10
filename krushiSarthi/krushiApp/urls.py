@@ -8,6 +8,7 @@ urlpatterns = [
     path("msp/", views.msp, name="msp"),
     path("agriloans/", views.agriloans, name="agriloans"),
     path("chatbot/", views.chatbot, name="chatbot"),
+    path("chatbot/api/", views.chatbot_api, name="chatbot_api"),
     path("register/", views.farmer_register, name="farmer_register"),
 
     # Custom Admin URLs

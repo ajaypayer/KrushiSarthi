@@ -62,10 +62,6 @@
   <!-- Chat messages -->
   <div class="chat-box" id="chatBox">
 
-    <div class="bot-msg">
-      {% trans "Hello Farmer How can I help you today? I can answer about schemes, MSP, loans and farming." %}
-      <div class="time">11:53 pm</div>
-    </div>
 
   </div>
 
@@ -85,13 +81,11 @@
 
 
   <!-- Input -->
-  <div class="chat-input">
-
+  <form id="chatForm" class="chat-input" onsubmit="return false;">
+    {% csrf_token %}
     <input type="text" id="userInput" placeholder="{% trans 'Type your question here...' %}">
-
-    <button onclick="sendMessage()">{% trans "Send" %}</button>
-
-  </div>
+    <button type="button" onclick="sendMessage()">{% trans "Send" %}</button>
+  </form>
 
 </div>
 
@@ -117,5 +111,57 @@
 </section>
 
 <script src="{% static 'krushiApp/js/app.js' %}"></script>
+<script>
+  function getCookie(name) {
+    const cookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith(name + '='));
+    return cookie ? decodeURIComponent(cookie.split('=')[1]) : null;
+  }
+
+  function appendMessage(text, sender) {
+    const chatBox = document.getElementById('chatBox');
+    const message = document.createElement('div');
+    message.className = sender === 'user' ? 'user-msg' : 'bot-msg';
+    message.innerHTML = `<p>${text}</p>`;
+    chatBox.appendChild(message);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('userInput');
+    const message = input.value.trim();
+    if (!message) {
+      return;
+    }
+
+    appendMessage(message, 'user');
+    input.value = '';
+
+    const csrfToken = getCookie('csrftoken');
+    const response = await fetch("{% url 'chatbot_api' %}", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRFToken': csrfToken,
+      },
+      body: new URLSearchParams({ message }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      appendMessage(data.reply, 'bot');
+    } else {
+      appendMessage('{% trans "Sorry, something went wrong. Please try again." %}', 'bot');
+    }
+  }
+
+  document.getElementById('userInput').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      sendMessage();
+    }
+  });
+</script>
 </body>
 </html>

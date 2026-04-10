@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import GovernmentScheme, MspRate, AgriLoan, Farmer
 from .forms import GovernmentSchemeForm, MspRateForm, AgriLoanForm, FarmerForm
+from .chatbot import get_answer
 import requests
 
 def translate_text(text, dest_lang):
@@ -63,6 +65,16 @@ def agriloans(request):
 
 def chatbot(request):
     return render(request, 'chatbot.html', _common_context())
+
+
+def chatbot_api(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'POST required'}, status=405)
+
+    user_input = request.POST.get('message', '').strip()
+    reply = get_answer(user_input)
+    return JsonResponse({'reply': reply})
+
 
 def farmer_register(request):
     success = False
