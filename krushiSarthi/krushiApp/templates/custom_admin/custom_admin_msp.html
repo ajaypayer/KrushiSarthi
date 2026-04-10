@@ -7,11 +7,16 @@
 <a href="{% url 'custom_admin_msp_add' %}" class="add-btn">+ Add New MSP Rate</a>
 
 <div class="table-card">
+    <p style="color: #666; margin-bottom: 15px;">
+        <strong>Total Records:</strong> {{ total_count }}
+    </p>
     <table>
         <tr>
             <th>Crop Name</th>
             <th>Season</th>
             <th>Rate (₹)</th>
+            <th>Year</th>
+            <th>Increase %</th>
             <th>Last Updated</th>
             <th>Actions</th>
         </tr>
@@ -21,6 +26,8 @@
             <td>{{ msp.crop_name }}</td>
             <td>{{ msp.season }}</td>
             <td>{{ msp.rate }}</td>
+            <td>{{ msp.year }}</td>
+            <td>{{ msp.percentage_increase|default:"—" }}</td>
             <td>{{ msp.last_updated }}</td>
             <td>
                 <a href="{% url 'custom_admin_msp_edit' msp.id %}" class="action-btn edit-btn">✏</a>
@@ -29,7 +36,7 @@
         </tr>
         {% empty %}
         <tr>
-            <td colspan="5" style="text-align: center;">No MSP data found.</td>
+            <td colspan="7" style="text-align: center; color: #999;">No MSP data found. <a href="{% url 'custom_admin_msp_add' %}">Add one now</a></td>
         </tr>
         {% endfor %}
 
