@@ -1,0 +1,509 @@
+[
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 2,
+  "fields": {
+    "name": "PM-Kisan Samman Nidhi",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-04",
+    "description": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN): Provides ₹6,000 annually to eligible landholding farmers in three installments of ₹2,000 each, transferred directly to bank accounts.\r\nhttps://pmkisan.gov.in/",
+    "benefits": null,
+    "eligibility": null,
+    "apply_url": null
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 4,
+  "fields": {
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "scheme_type": "State",
+    "status": "Active",
+    "last_updated": "2026-04-04",
+    "description": "A crop insurance scheme providing financial support and coverage to farmers against losses due to natural calamities, pests, or diseases.",
+    "benefits": "",
+    "eligibility": "farmer",
+    "apply_url": "https://pmfby.gov.in/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 5,
+  "fields": {
+    "name": "Pradhan Mantri Krishi Sinchai Yojana (PMKSY)",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-23",
+    "description": "Improves irrigation efficiency and water availability.",
+    "benefits": "Drip irrigation subsidy\r\nWater conservation\r\nBetter yield",
+    "eligibility": "All farmers",
+    "apply_url": "https://pmksy.gov.in"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 6,
+  "fields": {
+    "name": "Pradhan Mantri Kisan Urja Suraksha evam Utthaan Mahabhiyan (PM-KUSUM)",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-23",
+    "description": "Supports solar pumps and renewable energy use in agriculture.",
+    "benefits": "Up to 60% subsidy\r\nSolar irrigation\r\nExtra income via power sale",
+    "eligibility": "Farmers with land",
+    "apply_url": "https://pmkusum.mnre.gov.in"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 7,
+  "fields": {
+    "name": "Soil Health Card Scheme",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-23",
+    "description": "Provides soil nutrient reports and fertilizer recommendations.",
+    "benefits": "Free soil testing\r\nBalanced fertilizer use\r\nIncreased productivity",
+    "eligibility": "All farmers",
+    "apply_url": "https://soilhealth.dac.gov.in/home"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 8,
+  "fields": {
+    "name": "National Agriculture Market (e-NAM)",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-23",
+    "description": "Online agricultural market connecting mandis across India.",
+    "benefits": "Transparent pricing\r\nOnline trading\r\nWider market reach",
+    "eligibility": "Registered farmers",
+    "apply_url": "https://enam.gov.in/web/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 9,
+  "fields": {
+    "name": "Paramparagat Krishi Vikas Yojana (PKVY)",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-23",
+    "description": "Promotes organic farming through cluster-based approach.",
+    "benefits": "Financial assistance\r\nOrganic certification\r\nTraining support",
+    "eligibility": "Farmers willing to adopt organic farming",
+    "apply_url": "https://pgsindia-ncof.gov.in/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 10,
+  "fields": {
+    "name": "Sub-Mission on Agricultural Mechanization (SMAM)",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-23",
+    "description": "Promotes use of modern agricultural machinery.",
+    "benefits": "40–60% subsidy\r\nAccess to modern equipment\r\nReduced labor effort",
+    "eligibility": "Farmers & farmer groups",
+    "apply_url": "https://agrimachinery.nic.in/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 11,
+  "fields": {
+    "name": "National Beekeeping & Honey Mission",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-23",
+    "description": "Encourages beekeeping for additional income.",
+    "benefits": "Subsidy on bee colonies\r\nTraining programs\r\nAdditional income source",
+    "eligibility": "Farmers & entrepreneurs",
+    "apply_url": "https://nbb.gov.in/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 12,
+  "fields": {
+    "name": "Blue Revolution (Fisheries)",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-23",
+    "description": "Promotes fisheries sector growth and infrastructure.",
+    "benefits": "Fish farming support\r\nInfrastructure development\r\nEmployment generation",
+    "eligibility": "Fishermen & fish farmers",
+    "apply_url": "https://www.dof.gov.in/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 13,
+  "fields": {
+    "name": "National Mission on Sustainable Agriculture (NMSA)",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-24",
+    "description": "Promotes climate-resilient farming practices.",
+    "benefits": "Soil & water conservation\r\nClimate adaptation\r\nSustainable farming",
+    "eligibility": "All farmers",
+    "apply_url": "https://nmsa.dac.gov.in/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 14,
+  "fields": {
+    "name": "Rashtriya Krishi Vikas Yojana (RKVY)",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-24",
+    "description": "Supports state-level agriculture development projects.",
+    "benefits": "Financial support\r\nInfrastructure development\r\nInnovation promotion",
+    "eligibility": "Farmers & agri-entrepreneurs",
+    "apply_url": "https://rkvy.nic.in/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 15,
+  "fields": {
+    "name": "Integrated Scheme on Agriculture Marketing (ISAM)",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-24",
+    "description": "Improves agricultural marketing infrastructure.",
+    "benefits": "Market yards\r\nStorage facilities\r\nImproved logistics",
+    "eligibility": "Farmers, cooperatives",
+    "apply_url": "https://agmarknet.gov.in/home"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 16,
+  "fields": {
+    "name": "Mahatma Jyotirao Phule Shetkari Karjamukti Yojana",
+    "scheme_type": "State",
+    "status": "Active",
+    "last_updated": "2026-04-24",
+    "description": "A Maharashtra government scheme aimed at providing financial relief to farmers by waiving certain eligible agricultural loans and improving their economic stability.",
+    "benefits": "Loan waiver up to a specified limit\r\nReduces financial burden\r\nHelps farmers restart agricultural activities",
+    "eligibility": "Farmers from Maharashtra\r\nMust have taken crop loans from eligible institutions\r\nSmall & marginal farmers prioritized",
+    "apply_url": "https://mjpsky.maharashtra.gov.in/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 17,
+  "fields": {
+    "name": "Bhausaheb Fundkar Falbag Lagwad Yojana",
+    "scheme_type": "State",
+    "status": "Active",
+    "last_updated": "2026-04-24",
+    "description": "Promotes horticulture by encouraging farmers to cultivate fruit orchards with financial assistance.",
+    "benefits": "Subsidy for fruit plantation\r\nEncourages long-term income crops\r\nTechnical guidance support",
+    "eligibility": "Farmers in Maharashtra\r\nLand suitable for horticulture",
+    "apply_url": "https://mahadbt.maharashtra.gov.in/"
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 18,
+  "fields": {
+    "name": "Rajya Krishi Yantrikikaran Yojana",
+    "scheme_type": "State",
+    "status": "Active",
+    "last_updated": "2026-04-24",
+    "description": "State-level scheme promoting farm mechanization through subsidies on agricultural equipment.",
+    "benefits": "Subsidy on tractors & tools\r\nReduces labor dependency\r\nIncreases productivity",
+    "eligibility": "Farmers in Maharashtra\r\nIndividual or group farmers",
+    "apply_url": "https://mahadbt.maharashtra.gov.in/"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 1,
+  "fields": {
+    "crop_name": "Maize",
+    "season": "Kharif",
+    "rate": "2090.00",
+    "year": "2024-25",
+    "percentage_increase": "6%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 2,
+  "fields": {
+    "crop_name": "Paddy",
+    "season": "Kharif",
+    "rate": "2202.95",
+    "year": "2024-25",
+    "percentage_increase": "7%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 5,
+  "fields": {
+    "crop_name": "Gram",
+    "season": "Rabi",
+    "rate": "1212.00",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 6,
+  "fields": {
+    "crop_name": "Jowar",
+    "season": "Kharif",
+    "rate": "3180.00",
+    "year": "2024-25",
+    "percentage_increase": "6%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 7,
+  "fields": {
+    "crop_name": "Tur (Arhar)",
+    "season": "Kharif",
+    "rate": "7000.00",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 8,
+  "fields": {
+    "crop_name": "Moong",
+    "season": "Kharif",
+    "rate": "8558.00",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 9,
+  "fields": {
+    "crop_name": "Urad",
+    "season": "Kharif",
+    "rate": "6950.00",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 10,
+  "fields": {
+    "crop_name": "Wheat",
+    "season": "Rabi",
+    "rate": "2275.00",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 11,
+  "fields": {
+    "crop_name": "Barley",
+    "season": "Rabi",
+    "rate": "1849.98",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 12,
+  "fields": {
+    "crop_name": "Mustard",
+    "season": "Rabi",
+    "rate": "5650.00",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 13,
+  "fields": {
+    "crop_name": "Lentil (Masur)",
+    "season": "Rabi",
+    "rate": "6425.00",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 14,
+  "fields": {
+    "crop_name": "Safflower",
+    "season": "Rabi",
+    "rate": "5799.99",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-24"
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 1,
+  "fields": {
+    "bank_name": "SBI",
+    "loan_name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "category": "Crop Loans",
+    "interest_rate": "15.00",
+    "duration": null,
+    "details": "Pradhan Mantri Fasal Bima Yojana (PMFBY): An insurance scheme that also supports farmers with loans for crop insurance premiums, making it easier to afford insurance.",
+    "apply_url": null
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 2,
+  "fields": {
+    "bank_name": "HDFC",
+    "loan_name": "KCC",
+    "category": "Credit Cards",
+    "interest_rate": "4.00",
+    "duration": "12 months",
+    "details": "apply for KCC",
+    "apply_url": "https://www.myscheme.gov.in/schemes/kcc"
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 3,
+  "fields": {
+    "bank_name": "State Bank of India (SBI)",
+    "loan_name": "SBI Crop Loan",
+    "category": "Crop Loans",
+    "interest_rate": "6.99",
+    "duration": "6-12 months",
+    "details": "Seasonal agricultural operations\r\nQuick disbursal\r\nRequired documents:\r\nAadhaar/PAN\r\nLand records\r\nBank account\r\nCrop details",
+    "apply_url": "https://sbi.co.in/redirect/"
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 4,
+  "fields": {
+    "bank_name": "HDFC Bank",
+    "loan_name": "HDFC Crop Loan",
+    "category": "Crop Loans",
+    "interest_rate": "11.07",
+    "duration": "12 months-3 years",
+    "details": "Financing for crop cultivation\r\nFlexible repayment\r\nRequired documents:\r\nID proof\r\nLand documents\r\nBank account",
+    "apply_url": "https://www.hdfc.bank.in/"
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 5,
+  "fields": {
+    "bank_name": "ICICI Crop",
+    "loan_name": "ICICI Crop Loan",
+    "category": "Crop Loans",
+    "interest_rate": "9.99",
+    "duration": "12 months - 3 years",
+    "details": "Covers crop production expenses\r\nEasy documentation\r\nRequired documents:\r\nAadhaar/PAN\r\nLand proof\r\nBank details",
+    "apply_url": "https://www.icici.bank.in/"
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 6,
+  "fields": {
+    "bank_name": "SBI",
+    "loan_name": "SBI Tractor Loan",
+    "category": "Equipment Loans",
+    "interest_rate": "8.00",
+    "duration": "3-7 years",
+    "details": "Loan for tractors & farm machinery\r\nSubsidy options available\r\nRequired documents:\r\nID proof\r\nLand proof\r\nTractor quotation",
+    "apply_url": "https://sbi.bank.in/"
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 7,
+  "fields": {
+    "bank_name": "HDFC Bank",
+    "loan_name": "Tractor Loan",
+    "category": "Equipment Loans",
+    "interest_rate": "8.96",
+    "duration": "3–5 years",
+    "details": "Easy EMI options\r\nQuick approval\r\nRequired documents:\r\nAadhaar/PAN\r\nAddress proof\r\nIncome proof",
+    "apply_url": "https://www.hdfc.bank.in/"
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 8,
+  "fields": {
+    "bank_name": "Mahindra Finance",
+    "loan_name": "Mahindra Finance Tractor Loan",
+    "category": "Equipment Loans",
+    "interest_rate": "7.50",
+    "duration": "3–6 years",
+    "details": "Specialized for farmers\r\nFlexible repayment (season-based)\r\nRequired documents:\r\nID proof\r\nLand documents\r\nTractor quotation",
+    "apply_url": "https://www.mahindrafinance.com/"
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 9,
+  "fields": {
+    "bank_name": "ICICI Bank",
+    "loan_name": "Farm Equipment Loan (ICICI)",
+    "category": "Equipment Loans",
+    "interest_rate": "11.00",
+    "duration": "2–5 years",
+    "details": "Loan for tools, harvesters, etc.\r\nFast processing\r\nRequired documents:\r\nAadhaar/PAN\r\nEquipment quotation\r\nBank details",
+    "apply_url": "https://www.icici.bank.in/"
+  }
+},
+{
+  "model": "krushiApp.farmer",
+  "pk": 1,
+  "fields": {
+    "name": "Ajay Bhalchandra payer",
+    "mobile_number": "8669180821",
+    "email": "ajaypayer063@gmail.com",
+    "location": "mhasala , maharastra",
+    "registered_at": "2026-04-03T20:18:06.483Z"
+  }
+},
+{
+  "model": "krushiApp.farmer",
+  "pk": 2,
+  "fields": {
+    "name": "Maitry Santoshwar",
+    "mobile_number": "8668612234",
+    "email": null,
+    "location": "chandrapur",
+    "registered_at": "2026-04-10T05:06:22.985Z"
+  }
+}
+]
