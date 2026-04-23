@@ -1,0 +1,126 @@
+[
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 2,
+  "fields": {
+    "name": "PM-Kisan Samman Nidhi",
+    "scheme_type": "Central",
+    "status": "Active",
+    "last_updated": "2026-04-04",
+    "description": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN): Provides ₹6,000 annually to eligible landholding farmers in three installments of ₹2,000 each, transferred directly to bank accounts.\r\nhttps://pmkisan.gov.in/",
+    "benefits": null,
+    "eligibility": null,
+    "apply_url": null
+  }
+},
+{
+  "model": "krushiApp.governmentscheme",
+  "pk": 4,
+  "fields": {
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "scheme_type": "State",
+    "status": "Active",
+    "last_updated": "2026-04-04",
+    "description": "A crop insurance scheme providing financial support and coverage to farmers against losses due to natural calamities, pests, or diseases.",
+    "benefits": "",
+    "eligibility": "farmer",
+    "apply_url": "https://pmfby.gov.in/"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 1,
+  "fields": {
+    "crop_name": "Rice",
+    "season": "kharif",
+    "rate": "5.00",
+    "year": "2024-25",
+    "percentage_increase": null,
+    "last_updated": "2026-04-04"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 2,
+  "fields": {
+    "crop_name": "Paddy",
+    "season": "Rabi",
+    "rate": "2212.00",
+    "year": "2024-25",
+    "percentage_increase": "4%",
+    "last_updated": "2026-04-10"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 5,
+  "fields": {
+    "crop_name": "gra",
+    "season": "Rabi",
+    "rate": "1212.00",
+    "year": "2024-25",
+    "percentage_increase": "5%",
+    "last_updated": "2026-04-10"
+  }
+},
+{
+  "model": "krushiApp.msprate",
+  "pk": 6,
+  "fields": {
+    "crop_name": "paddy",
+    "season": "Kharif",
+    "rate": "1234.00",
+    "year": "2024-25",
+    "percentage_increase": "6",
+    "last_updated": "2026-04-10"
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 1,
+  "fields": {
+    "bank_name": "SBI",
+    "loan_name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "category": "Crop Loans",
+    "interest_rate": "15.00",
+    "duration": null,
+    "details": "Pradhan Mantri Fasal Bima Yojana (PMFBY): An insurance scheme that also supports farmers with loans for crop insurance premiums, making it easier to afford insurance.",
+    "apply_url": null
+  }
+},
+{
+  "model": "krushiApp.agriloan",
+  "pk": 2,
+  "fields": {
+    "bank_name": "HDFC",
+    "loan_name": "KCC",
+    "category": "Credit Cards",
+    "interest_rate": "400.00",
+    "duration": "12 months",
+    "details": "apply for KCC",
+    "apply_url": "https://www.myscheme.gov.in/schemes/kcc"
+  }
+},
+{
+  "model": "krushiApp.farmer",
+  "pk": 1,
+  "fields": {
+    "name": "Ajay Bhalchandra payer",
+    "mobile_number": "8669180821",
+    "email": "ajaypayer063@gmail.com",
+    "location": "mhasala , maharastra",
+    "registered_at": "2026-04-03T20:18:06.483Z"
+  }
+},
+{
+  "model": "krushiApp.farmer",
+  "pk": 2,
+  "fields": {
+    "name": "Maitry Santoshwar",
+    "mobile_number": "8668612234",
+    "email": null,
+    "location": "chandrapur",
+    "registered_at": "2026-04-10T05:06:22.985Z"
+  }
+}
+]
