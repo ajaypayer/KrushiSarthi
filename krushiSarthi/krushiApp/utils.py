@@ -29,7 +29,7 @@ def send_sms(phone, message):
     }
 
     headers = {
-        "authorization":"a7Cp********************",
+        "authorization": api_key,
         "Content-Type": "application/json"
     }
 
@@ -38,9 +38,12 @@ def send_sms(phone, message):
         response = requests.post(api_url, json=payload, headers=headers, timeout=10)
         response.raise_for_status()
         print(f"[SMS SUCCESS] SMS sent to {numbers}")
+        print(f"[SMS RESPONSE] {response.status_code} {response.text}")
         return True
     except Exception as exc:
         print(f"[SMS ERROR] Send failed for {numbers}: {exc}")
+        if hasattr(exc, 'response') and exc.response is not None:
+            print(f"[SMS ERROR RESPONSE] {exc.response.status_code} {exc.response.text}")
         return False
 
 
