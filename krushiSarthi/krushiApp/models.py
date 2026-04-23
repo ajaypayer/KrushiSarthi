@@ -56,3 +56,16 @@ class Farmer(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.mobile_number})"
+
+class Scheme(models.Model):
+    name = models.CharField(max_length=200)
+
+class MSP(models.Model):
+    crop = models.CharField(max_length=100)
+    price = models.IntegerField()
+
+class Loan(models.Model):
+    name = models.CharField(max_length=200)
+
+class User(models.Model):
+    phone = models.CharField(max_length=15)

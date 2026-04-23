@@ -19,7 +19,7 @@ urlpatterns = [
     path("admin-panel/schemes/", views.manage_schemes, name="custom_admin_schemes"),
     path("admin-panel/schemes/add/", views.add_scheme, name="custom_admin_scheme_add"),
     path("admin-panel/schemes/edit/<int:pk>/", views.edit_scheme, name="custom_admin_scheme_edit"),
-    path("admin-panel/schemes/delete/<int:pk>/", views.edit_scheme, name="custom_admin_scheme_delete"), # Note: delete was previously mapped to edit in some contexts, fixing to delete_scheme
+    path("admin-panel/schemes/delete/<int:pk>/", views.delete_scheme, name="custom_admin_scheme_delete"),
     
     # MSP
     path("admin-panel/msp/", views.manage_msps, name="custom_admin_msps"),

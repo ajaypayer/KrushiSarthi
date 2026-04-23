@@ -3,9 +3,11 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.admin.views.decorators import staff_member_required
+from django.views.decorators.cache import cache_control
 from .models import GovernmentScheme, MspRate, AgriLoan, Farmer
 from .forms import GovernmentSchemeForm, MspRateForm, AgriLoanForm, FarmerForm
 from .chatbot import get_answer
+from .utils import send_bulk_sms
 import requests
 
 def translate_text(text, dest_lang):
@@ -113,19 +115,34 @@ def custom_admin_logout(request):
     return redirect('home')
 
 def notify_registered_farmers(title, message):
-    """
-    Simulated SMS/Alert notification logic.
-    Logs the alert to the console for every registered farmer.
-    """
-    farmers = Farmer.objects.all()
-    print("\n" + "="*50)
-    print(f"BROADCAST ALERT: {title}")
-    print(f"MESSAGE: {message}")
-    print(f"SENDING TO {farmers.count()} REGISTERED FARMERS...")
-    for farmer in farmers:
-        # Placeholder for real SMS API (Twilio, etc.)
-        print(f"  [SMS SIMULATED] -> {farmer.mobile_number} ({farmer.name})")
-    print("="*50 + "\n")
+    """Send a broadcast notification to all registered farmers."""
+    try:
+        numbers = list(Farmer.objects
+            .filter(mobile_number__isnull=False)
+            .exclude(mobile_number__exact='')
+            .values_list('mobile_number', flat=True)
+        )
+
+        print(f"\n[NOTIFICATION LOG] Fetched {len(numbers)} registered farmer numbers from database.")
+        
+        if not numbers:
+            print("[NOTIFICATION LOG] ERROR: No registered farmer mobile numbers found in the database.")
+            return False
+
+        print(f"[NOTIFICATION LOG] Mobile numbers: {numbers}")
+        sms_text = f"{title}: {message}"
+        print(f"[NOTIFICATION LOG] Sending message: {sms_text}")
+        
+        result = send_bulk_sms(numbers, sms_text)
+
+        if result:
+            print(f"[NOTIFICATION LOG] SUCCESS: Notifications sent to {len(numbers)} farmers.")
+        else:
+            print(f"[NOTIFICATION LOG] ERROR: Notification dispatch failed. Check SMS API configuration.")
+        return result
+    except Exception as e:
+        print(f"[NOTIFICATION LOG] ERROR during notification: {str(e)}")
+        return False
 
 @staff_member_required(login_url='custom_admin_login')
 def manage_schemes(request):
@@ -136,12 +153,36 @@ def manage_schemes(request):
 def add_scheme(request):
     if request.method == 'POST':
         form = GovernmentSchemeForm(request.POST)
+        print(f"\n[SCHEME ADD] POST request received")
+        print(f"[SCHEME ADD] POST data: {request.POST.dict()}")
+        
         if form.is_valid():
-            scheme = form.save()
-            notify_registered_farmers("New Scheme Added", f"Scheme {scheme.name} is now available!")
-            return redirect('custom_admin_schemes')
+            print(f"[SCHEME ADD] Form is valid")
+            try:
+                from django.db import transaction
+                with transaction.atomic():
+                    scheme = form.save()
+                    print(f"[SCHEME SAVE SUCCESS] Scheme created with ID: {scheme.id}")
+                    print(f"[SCHEME SAVE SUCCESS] Name: {scheme.name}, Type: {scheme.scheme_type}")
+                    
+                from django.db import connection
+                connection.close()
+                
+                verify_scheme = GovernmentScheme.objects.get(id=scheme.id)
+                print(f"[SCHEME VERIFY SUCCESS] Verified scheme in database: {verify_scheme.name}")
+                
+                notify_registered_farmers("New Scheme Added", f"Scheme {scheme.name} is now available!")
+                return redirect('custom_admin_schemes')
+            except Exception as e:
+                import traceback
+                print(f"[SCHEME SAVE ERROR] Exception: {str(e)}")
+                print(f"[SCHEME SAVE ERROR] Traceback: {traceback.format_exc()}")
+                form.add_error(None, f"Error saving scheme: {str(e)}")
+        else:
+            print(f"[FORM VALIDATION ERROR] Scheme form errors: {form.errors}")
     else:
         form = GovernmentSchemeForm()
+        print(f"[SCHEME ADD] GET request - displaying form")
     return render(request, 'custom_admin/custom_admin_form.html', {
         'form': form,
         'page_title': 'Add New Scheme',
@@ -171,21 +212,77 @@ def delete_scheme(request, pk):
     return redirect('custom_admin_schemes')
 
 # MSP Admin Views
+@cache_control(no_cache=True, no_store=True, must_revalidate=True, max_age=0)
 @staff_member_required(login_url='custom_admin_login')
 def manage_msps(request):
-    msps = MspRate.objects.all()
-    return render(request, 'custom_admin/custom_admin_msp.html', {'msps': msps})
+    # Ensure fresh data is fetched from database every time
+    from django.core.cache import cache
+    cache.clear()  # Clear any cached data
+    
+    msps = MspRate.objects.all().order_by('-last_updated')
+    total_count = msps.count()
+    
+    print(f"\n[MSP VIEW LOG] Fetching MSP data...")
+    print(f"[MSP VIEW LOG] Total MSP records in database: {total_count}")
+    
+    if total_count > 0:
+        for msp in msps:
+            print(f"[MSP VIEW LOG]   -> ID: {msp.id}, Crop: {msp.crop_name}, Season: {msp.season}, Rate: {msp.rate}")
+    else:
+        print(f"[MSP VIEW LOG] WARNING: No MSP records found in database!")
+    
+    response = render(request, 'custom_admin/custom_admin_msp.html', {
+        'msps': msps,
+        'total_count': total_count
+    })
+    # Add no-cache headers to the response
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
 
 @staff_member_required(login_url='custom_admin_login')
 def add_msp(request):
     if request.method == 'POST':
         form = MspRateForm(request.POST)
+        print(f"\n[MSP ADD] POST request received")
+        print(f"[MSP ADD] POST data: {request.POST}")
+        
         if form.is_valid():
-            msp_obj = form.save()
-            notify_registered_farmers("MSP Updated", f"MSP for {msp_obj.crop_name} is now {msp_obj.rate}.")
-            return redirect('custom_admin_msps')
+            print(f"[MSP ADD] Form is valid")
+            print(f"[MSP ADD] Cleaned data: {form.cleaned_data}")
+            try:
+                from django.db import transaction
+                with transaction.atomic():
+                    msp_obj = form.save()
+                    print(f"[MSP SAVE SUCCESS] MSP object created with ID: {msp_obj.id}")
+                    print(f"[MSP SAVE SUCCESS] Crop: {msp_obj.crop_name}, Season: {msp_obj.season}, Rate: {msp_obj.rate}")
+                    
+                # Verify data was actually saved
+                from django.db import connection
+                connection.close()  # Close connection to ensure commits are flushed
+                
+                # Query to verify
+                verify_msp = MspRate.objects.get(id=msp_obj.id)
+                print(f"[MSP VERIFY SUCCESS] Verified MSP in database: {verify_msp.crop_name}")
+                
+                notify_registered_farmers("MSP Updated", f"MSP for {msp_obj.crop_name} is now ₹{msp_obj.rate} per quintal.")
+                return redirect('custom_admin_msps')
+            except Exception as e:
+                import traceback
+                print(f"[MSP SAVE ERROR] Exception occurred: {str(e)}")
+                print(f"[MSP SAVE ERROR] Traceback: {traceback.format_exc()}")
+                form.add_error(None, f"Error saving MSP: {str(e)}")
+        else:
+            print(f"[FORM VALIDATION ERROR] Form is NOT valid")
+            print(f"[FORM VALIDATION ERROR] Form errors: {form.errors}")
+            for field, errors in form.errors.items():
+                for error in errors:
+                    print(f"  -> {field}: {error}")
     else:
         form = MspRateForm()
+        print(f"[MSP ADD] GET request - displaying form")
+    
     return render(request, 'custom_admin/custom_admin_form.html', {
         'form': form,
         'page_title': 'Add MSP Data',
@@ -224,12 +321,36 @@ def manage_loans(request):
 def add_loan(request):
     if request.method == 'POST':
         form = AgriLoanForm(request.POST)
+        print(f"\n[LOAN ADD] POST request received")
+        print(f"[LOAN ADD] POST data: {request.POST.dict()}")
+        
         if form.is_valid():
-            loan = form.save()
-            notify_registered_farmers("New Loan Available", f"A new loan {loan.loan_name} from {loan.bank_name} is open.")
-            return redirect('custom_admin_loans')
+            print(f"[LOAN ADD] Form is valid")
+            try:
+                from django.db import transaction
+                with transaction.atomic():
+                    loan = form.save()
+                    print(f"[LOAN SAVE SUCCESS] Loan created with ID: {loan.id}")
+                    print(f"[LOAN SAVE SUCCESS] Name: {loan.loan_name}, Bank: {loan.bank_name}")
+                    
+                from django.db import connection
+                connection.close()
+                
+                verify_loan = AgriLoan.objects.get(id=loan.id)
+                print(f"[LOAN VERIFY SUCCESS] Verified loan in database: {verify_loan.loan_name}")
+                
+                notify_registered_farmers("New Loan Available", f"A new loan {loan.loan_name} from {loan.bank_name} is open.")
+                return redirect('custom_admin_loans')
+            except Exception as e:
+                import traceback
+                print(f"[LOAN SAVE ERROR] Exception: {str(e)}")
+                print(f"[LOAN SAVE ERROR] Traceback: {traceback.format_exc()}")
+                form.add_error(None, f"Error saving loan: {str(e)}")
+        else:
+            print(f"[FORM VALIDATION ERROR] Loan form errors: {form.errors}")
     else:
         form = AgriLoanForm()
+        print(f"[LOAN ADD] GET request - displaying form")
     return render(request, 'custom_admin/custom_admin_form.html', {
         'form': form,
         'page_title': 'Add Loan Scheme',
