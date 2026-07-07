@@ -356,6 +356,26 @@ def get_local_db_answer(user_input):
     print(f"[OFFLINE FALLBACK] Structured keywords: {structured_keywords}")
     print(f"[OFFLINE FALLBACK] General keywords: {general_keywords}")
 
+    # Indicators configuration to ensure precise query routing
+    MSP_INDICATORS = {
+        'msp', 'rate', 'price', 'rates', 'prices', 'quintal', 'cost', 'costs',
+        'एमएसपी', 'किंमत', 'भाव', 'दर', 'क्विंटल', 'उत्पादन खर्च'
+    }
+    LOAN_INDICATORS = {
+        'loan', 'loans', 'interest', 'repayment', 'documents', 'eligibility', 'eligible', 'bank', 'banks',
+        'credit', 'kcc', 'limit', 'limits',
+        'कर्ज', 'कर्जासाठी', 'कागदपत्रे', 'व्याज', 'बँक', 'बँका', 'पात्रता', 'मुदत', 'अटी'
+    }
+    SCHEME_INDICATORS = {
+        'scheme', 'schemes', 'subsidy', 'subsidies', 'benefit', 'benefits', 'yojana', 'yojna',
+        'yojanas', 'websites', 'website', 'apply', 'applying',
+        'योजना', 'अनुदान', 'फायदा', 'लाभ', 'संकेतस्थळ'
+    }
+
+    has_msp_indicator = any(word in general_keywords for word in MSP_INDICATORS)
+    has_loan_indicator = any(word in general_keywords for word in LOAN_INDICATORS)
+    has_scheme_indicator = any(word in general_keywords for word in SCHEME_INDICATORS)
+
     db_path = get_db_path()
     conn = None
     try:
@@ -384,59 +404,62 @@ def get_local_db_answer(user_input):
                         lines.append(f"• Official Source: {r['official_source']}")
                 return "\n".join(lines)
 
-        # Try to query structured tables ONLY if we have specific structured keywords
+        # Try to query structured tables ONLY if we have specific structured keywords and category indicators match
         if structured_keywords:
             # B. Search MSP Rates Table
-            for keyword in structured_keywords:
-                cursor.execute("""
-                    SELECT crop, variety, season, marketing_year, msp_rupees_per_quintal, unit 
-                    FROM csv_msp_rates 
-                    WHERE crop LIKE ? OR variety LIKE ?
-                """, (f'%{keyword}%', f'%{keyword}%'))
-                rows = cursor.fetchall()
-                if rows:
-                    lines = ["MSP rates found in our database:"]
-                    for r in rows:
-                        lines.append(f"• {r['crop']} ({r['variety']}) - {r['season']} ({r['marketing_year']}): Rs. {r['msp_rupees_per_quintal']} per {r['unit']}")
-                    return "\n".join(lines)
+            if has_msp_indicator:
+                for keyword in structured_keywords:
+                    cursor.execute("""
+                        SELECT crop, variety, season, marketing_year, msp_rupees_per_quintal, unit 
+                        FROM csv_msp_rates 
+                        WHERE crop LIKE ? OR variety LIKE ?
+                    """, (f'%{keyword}%', f'%{keyword}%'))
+                    rows = cursor.fetchall()
+                    if rows:
+                        lines = ["MSP rates found in our database:"]
+                        for r in rows:
+                            lines.append(f"• {r['crop']} ({r['variety']}) - {r['season']} ({r['marketing_year']}): Rs. {r['msp_rupees_per_quintal']} per {r['unit']}")
+                        return "\n".join(lines)
 
             # C. Search Agriculture Loans Table (matches category/name/purpose/eligibility)
-            for keyword in structured_keywords:
-                cursor.execute("""
-                    SELECT loan_name, category, eligibility, purpose, documents_required, repayment_period, official_source 
-                    FROM csv_agriculture_loans 
-                    WHERE loan_name LIKE ? OR category LIKE ? OR purpose LIKE ? OR documents_required LIKE ?
-                """, (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%', f'%{keyword}%'))
-                rows = cursor.fetchall()
-                if rows:
-                    lines = []
-                    for r in rows:
-                        lines.append(f"Loan Name: {r['loan_name']} ({r['category']})")
-                        lines.append(f"• Eligibility: {r['eligibility']}")
-                        lines.append(f"• Purpose: {r['purpose']}")
-                        lines.append(f"• Required Documents: {r['documents_required']}")
-                        lines.append(f"• Repayment Period: {r['repayment_period']}")
-                        if r['official_source']:
-                            lines.append(f"• Official Source: {r['official_source']}")
-                    return "\n".join(lines)
+            if has_loan_indicator:
+                for keyword in structured_keywords:
+                    cursor.execute("""
+                        SELECT loan_name, category, eligibility, purpose, documents_required, repayment_period, official_source 
+                        FROM csv_agriculture_loans 
+                        WHERE loan_name LIKE ? OR category LIKE ? OR purpose LIKE ? OR documents_required LIKE ?
+                    """, (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%', f'%{keyword}%'))
+                    rows = cursor.fetchall()
+                    if rows:
+                        lines = []
+                        for r in rows:
+                            lines.append(f"Loan Name: {r['loan_name']} ({r['category']})")
+                            lines.append(f"• Eligibility: {r['eligibility']}")
+                            lines.append(f"• Purpose: {r['purpose']}")
+                            lines.append(f"• Required Documents: {r['documents_required']}")
+                            lines.append(f"• Repayment Period: {r['repayment_period']}")
+                            if r['official_source']:
+                                lines.append(f"• Official Source: {r['official_source']}")
+                        return "\n".join(lines)
 
             # D. Search Government Schemes Table (matches name/category/benefits/eligibility)
-            for keyword in structured_keywords:
-                cursor.execute("""
-                    SELECT scheme_name, category, eligibility, benefits, official_website 
-                    FROM csv_government_schemes 
-                    WHERE scheme_name LIKE ? OR category LIKE ? OR benefits LIKE ? OR eligibility LIKE ?
-                """, (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%', f'%{keyword}%'))
-                rows = cursor.fetchall()
-                if rows:
-                    lines = []
-                    for r in rows:
-                        lines.append(f"Scheme Name: {r['scheme_name']} ({r['category']})")
-                        lines.append(f"• Eligibility: {r['eligibility']}")
-                        lines.append(f"• Benefits: {r['benefits']}")
-                        if r['official_website']:
-                            lines.append(f"• Official Website: {r['official_website']}")
-                    return "\n".join(lines)
+            if has_scheme_indicator:
+                for keyword in structured_keywords:
+                    cursor.execute("""
+                        SELECT scheme_name, category, eligibility, benefits, official_website 
+                        FROM csv_government_schemes 
+                        WHERE scheme_name LIKE ? OR category LIKE ? OR benefits LIKE ? OR eligibility LIKE ?
+                    """, (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%', f'%{keyword}%'))
+                    rows = cursor.fetchall()
+                    if rows:
+                        lines = []
+                        for r in rows:
+                            lines.append(f"Scheme Name: {r['scheme_name']} ({r['category']})")
+                            lines.append(f"• Eligibility: {r['eligibility']}")
+                            lines.append(f"• Benefits: {r['benefits']}")
+                            if r['official_website']:
+                                lines.append(f"• Official Website: {r['official_website']}")
+                        return "\n".join(lines)
 
         # E. Search Agriculture Q&A Table using FTS5 (matching all general keywords)
         if general_keywords:
@@ -595,6 +618,13 @@ Rules:
 - Use case-insensitive LIKE pattern matching (e.g. `WHERE crop LIKE '%paddy%'`) for flexible text matching to prevent spelling mismatches.
 - Limit query results (using LIMIT 3 or LIMIT 5) to avoid returning too much data.
 - Return ONLY the raw SQL query. Do not wrap it in markdown code blocks like ```sql ... ```. Do not add comments. Do not explain. If no query is needed, reply ONLY with "NONE".
+
+Query Routing Examples:
+* User: "How do I know when my corn is ready to harvest?" -> SELECT answers FROM csv_agriculture_qa WHERE csv_agriculture_qa MATCH 'corn harvest' LIMIT 1;
+* User: "Why is crop rotation important?" -> SELECT answers FROM csv_agriculture_qa WHERE csv_agriculture_qa MATCH 'crop rotation' LIMIT 1;
+* User: "What is the MSP of Paddy for 2025-26?" -> SELECT crop, variety, season, marketing_year, msp_rupees_per_quintal, unit FROM csv_msp_rates WHERE crop LIKE '%paddy%' LIMIT 3;
+* User: "मला पीक कर्जासाठी कोणती कागदपत्रे लागतील?" -> SELECT loan_name, category, eligibility, purpose, documents_required, repayment_period, official_source FROM csv_agriculture_loans WHERE category LIKE '%crop%' OR purpose LIKE '%crop%' OR loan_name LIKE '%crop%' LIMIT 3;
+* User: "What is PM Kisan scheme?" -> SELECT scheme_name, category, eligibility, benefits, official_website FROM csv_government_schemes WHERE scheme_name LIKE '%pm kisan%' OR benefits LIKE '%pm kisan%' LIMIT 3;
 
 User's Question: "{user_input}"
 SQL Query:"""

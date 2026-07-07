@@ -45,7 +45,8 @@ def run_tests():
         "What is the MSP of Paddy for 2025-26?",
         "धान का एमएसपी क्या है?",
         "मला पीक कर्जासाठी कोणती कागदपत्रे लागतील?",
-        "Why is crop rotation important in farming?"
+        "Why is crop rotation important in farming?",
+        "How do I know when my corn is ready to harvest?"
     ]
 
     import time
