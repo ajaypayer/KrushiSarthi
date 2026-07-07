@@ -13,6 +13,8 @@ STOP_WORDS = {
     'what', 'is', 'the', 'a', 'an', 'about', 'give', 'me', 'info', 'information',
     'tell', 'please', 'of', 'and', 'to', 'how', 'why', 'are', 'can', 'i', 'my',
     'in', 'for', 'do', 'does', 'should', 'could', 'would', 'on', 'with', 'from',
+    'who', 'you', 'your', 'he', 'she', 'it', 'they', 'them', 'we', 'our', 'us',
+    'when', 'where', 'which', 'whose', 'know', 'ready', 'get', 'got', 'make', 'take',
     'what is', 'tell me', 'how to', 'give me', 'want to', 'details of'
 }
 
@@ -480,6 +482,7 @@ def get_local_db_answer(user_input):
                         SELECT question, answers 
                         FROM csv_agriculture_qa 
                         WHERE csv_agriculture_qa MATCH ? 
+                        ORDER BY rank
                         LIMIT 1
                     """, (fts_query,))
                     row = cursor.fetchone()
@@ -503,6 +506,11 @@ def get_local_db_answer(user_input):
     finally:
         if conn:
             conn.close()
+
+    # If nothing was matched in the database, check for general greeting words to reply warmly
+    GREETING_WORDS = {'hello', 'hi', 'hey', 'namaste', 'namaskar', 'dhanyawad', 'thanks', 'thank you', 'नमस्ते', 'नमस्कार', 'धन्यवाद', 'थँक्स', 'राम राम'}
+    if any(word in GREETING_WORDS for word in words):
+        return "Hello! I am KrushiSarthi, your smart agricultural assistant. How can I help you today with crop rates, government schemes, or farm loans?"
 
     return None
 
