@@ -1,0 +1,26 @@
+id,loan_name,category,eligibility,purpose,documents_required,repayment_period,official_source
+1,Kisan Credit Card (KCC),Crop Loan,Eligible farmers,Crop cultivation expenses,"Aadhaar, Land Record, Bank Account","As per crop cycle",https://www.myscheme.gov.in/schemes/kcc
+2,KCC for Dairy,Animal Husbandry,Dairy farmers,Dairy farming expenses,"Aadhaar, Bank Account","As per bank",https://www.myscheme.gov.in/schemes/kcc
+3,KCC for Fisheries,Fisheries,Fish farmers,Fish farming expenses,"Aadhaar, Bank Account","As per bank",https://www.myscheme.gov.in/schemes/kcc
+4,Tractor Loan,Farm Machinery,Eligible farmers,Purchase of tractor,"KYC, Land Record","3-7 years",https://www.nabard.org
+5,Power Tiller Loan,Farm Machinery,Eligible farmers,Purchase of power tiller,"KYC, Land Record","3-7 years",https://www.nabard.org
+6,Harvester Loan,Farm Machinery,Eligible farmers,Purchase of harvester,"KYC, Land Record","3-7 years",https://www.nabard.org
+7,Drip Irrigation Loan,Irrigation,Eligible farmers,Install drip irrigation,"KYC, Land Record","3-7 years",https://www.nabard.org
+8,Sprinkler Irrigation Loan,Irrigation,Eligible farmers,Install sprinkler irrigation,"KYC, Land Record","3-7 years",https://www.nabard.org
+9,Farm Pond Loan,Infrastructure,Eligible farmers,Construct farm pond,"KYC, Land Record","5-10 years",https://www.nabard.org
+10,Warehouse Loan,Infrastructure,Farmers/FPOs,Build warehouse,"Project Report","5-10 years",https://agriinfra.dac.gov.in
+11,Cold Storage Loan,Infrastructure,Farmers/FPOs,Cold storage construction,"Project Report","5-10 years",https://agriinfra.dac.gov.in
+12,Polyhouse Loan,Horticulture,Eligible farmers,Polyhouse cultivation,"Project Report","5-7 years",https://www.nabard.org
+13,Greenhouse Loan,Horticulture,Eligible farmers,Greenhouse cultivation,"Project Report","5-7 years",https://www.nabard.org
+14,Orchard Development Loan,Horticulture,Eligible farmers,Develop fruit orchard,"Project Report","5-10 years",https://www.nabard.org
+15,Dairy Farm Expansion Loan,Dairy,Dairy farmers,Expand dairy farm,"Project Report","5-7 years",https://www.nabard.org
+16,Goat Farming Loan,Livestock,Eligible farmers,Goat farming,"Project Report","3-5 years",https://www.nabard.org
+17,Sheep Farming Loan,Livestock,Eligible farmers,Sheep farming,"Project Report","3-5 years",https://www.nabard.org
+18,Poultry Farm Loan,Livestock,Eligible farmers,Poultry farming,"Project Report","3-5 years",https://www.nabard.org
+19,Piggery Loan,Livestock,Eligible farmers,Pig farming,"Project Report","3-5 years",https://www.nabard.org
+20,Bee Keeping Loan,Apiculture,Eligible farmers,Bee keeping,"Project Report","3-5 years",https://www.nabard.org
+21,Mushroom Cultivation Loan,Horticulture,Eligible farmers,Mushroom cultivation,"Project Report","3-5 years",https://www.nabard.org
+22,Floriculture Loan,Horticulture,Eligible farmers,Flower cultivation,"Project Report","5-7 years",https://www.nabard.org
+23,Seed Production Loan,Agriculture,Eligible farmers,Seed production,"Project Report","As per bank",https://www.nabard.org
+24,Organic Farming Loan,Agriculture,Eligible farmers,Organic farming,"Project Report","As per bank",https://www.nabard.org
+25,Agricultural Infrastructure Loan,Infrastructure,Farmers/FPOs,Storage and processing infrastructure,"Project Report","Long term",https://agriinfra.dac.gov.in

@@ -2,6 +2,8 @@
 .env
 .env.*
 *.env
+**/.env
+**/.env.*
 
 # Virtual environments
 venv/
@@ -28,4 +30,3 @@ db.sqlite3
 # Local config / secrets
 secrets.json
 settings_local.py
-

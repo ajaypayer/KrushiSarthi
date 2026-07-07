@@ -1,0 +1,16 @@
+id,scheme_name,category,eligibility,benefits,documents_required,official_website
+1,PM-KISAN,Income Support,Small and marginal farmer families,"₹6,000/year in 3 installments","Aadhaar, Bank Account, Land Records",https://pmkisan.gov.in
+2,Pradhan Mantri Fasal Bima Yojana (PMFBY),Crop Insurance,All eligible farmers growing notified crops,Insurance against crop loss,"Aadhaar, Bank, Land/Crop details",https://pmfby.gov.in
+3,Kisan Credit Card (KCC),Agricultural Loan,"Farmers, animal husbandry and fisheries",Short-term credit for farming,"Aadhaar, PAN (if applicable), Land records, Bank account",https://www.myscheme.gov.in/schemes/kcc
+4,Soil Health Card Scheme,Soil Testing,All farmers,Soil nutrient analysis and fertilizer advice,"Aadhaar, Land details",https://soilhealth.dac.gov.in
+5,PM Krishi Sinchai Yojana (PMKSY),Irrigation,Eligible farmers,Improved irrigation and water-use efficiency,"Aadhaar, Land records",https://pmksy.gov.in
+6,e-NAM,Agricultural Marketing,Farmers and traders,Online agricultural market access,"Aadhaar, Bank account",https://enam.gov.in
+7,National Agriculture Market,Marketing,Registered farmers,Better price discovery,Identity proof,https://enam.gov.in
+8,Paramparagat Krishi Vikas Yojana (PKVY),Organic Farming,Farmer groups,Support for organic farming,Farmer registration,https://pgsindia-ncof.gov.in/PKVY.aspx
+9,National Mission for Sustainable Agriculture (NMSA),Sustainable Farming,Eligible farmers,Climate-resilient agriculture support,As per state guidelines,https://nmsa.dac.gov.in
+10,Agricultural Infrastructure Fund (AIF),Infrastructure,"Farmers, FPOs, Agri entrepreneurs",Financing for post-harvest infrastructure,"Project proposal, KYC",https://agriinfra.dac.gov.in
+11,"Formation and Promotion of 10,000 FPOs",Farmer Producer Organizations,Farmer groups,Support for FPO formation,Group registration,https://sfacindia.com
+12,National Beekeeping & Honey Mission,Beekeeping,Beekeepers and farmers,Financial and technical support,Identity proof,https://nbhm.gov.in
+13,Mission for Integrated Development of Horticulture (MIDH),Horticulture,Horticulture farmers,"Support for fruits, vegetables, flowers",State norms,https://midh.gov.in
+14,Rashtriya Krishi Vikas Yojana (RKVY),Agriculture Development,States and farmers,Agriculture development projects,State-specific,https://rkvy.nic.in
+15,Sub-Mission on Agricultural Mechanization (SMAM),Farm Mechanization,Eligible farmers,Subsidy on agricultural machinery,"Aadhaar, Land details",https://agrimachinery.nic.in

@@ -34,7 +34,7 @@ if ENV_PATH.exists():
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3*gh(9y$bjoxeoog571&fdn--7wha!4brdyk!^5@%z1nt4111z'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -148,5 +148,5 @@ STATICFILES_DIRS = [
 ]
 
 # SMS configuration for registered farmer notifications
-SMS_API_URL = os.environ.get('SMS_API_URL', 'https://www.fast2sms.com/dev/bulkV2')
+SMS_API_URL = os.environ.get('SMS_API_URL', '')
 SMS_API_KEY = os.environ.get('SMS_API_KEY', '')

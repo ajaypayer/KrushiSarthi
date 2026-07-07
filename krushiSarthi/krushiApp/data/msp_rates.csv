@@ -1,0 +1,29 @@
+id,crop,variety,season,marketing_year,msp_rupees_per_quintal,unit
+1,Paddy,Common,Kharif,2025-26,2369,Quintal
+2,Paddy,Grade A,Kharif,2025-26,2389,Quintal
+3,Jowar,Hybrid,Kharif,2025-26,3699,Quintal
+4,Jowar,Maldandi,Kharif,2025-26,3749,Quintal
+5,Bajra,NA,Kharif,2025-26,2775,Quintal
+6,Ragi,NA,Kharif,2025-26,4886,Quintal
+7,Maize,NA,Kharif,2025-26,2400,Quintal
+8,Tur (Arhar),NA,Kharif,2025-26,8000,Quintal
+9,Moong,NA,Kharif,2025-26,8768,Quintal
+10,Urad,NA,Kharif,2025-26,7800,Quintal
+11,Groundnut,NA,Kharif,2025-26,7263,Quintal
+12,Sunflower Seed,NA,Kharif,2025-26,7728,Quintal
+13,Soybean (Yellow),NA,Kharif,2025-26,5328,Quintal
+14,Sesamum,NA,Kharif,2025-26,9846,Quintal
+15,Nigerseed,NA,Kharif,2025-26,9537,Quintal
+16,Cotton,Medium Staple,Kharif,2025-26,7710,Quintal
+17,Cotton,Long Staple,Kharif,2025-26,8110,Quintal
+18,Wheat,NA,Rabi,2025-26,2425,Quintal
+19,Barley,NA,Rabi,2025-26,1980,Quintal
+20,Gram (Chana),NA,Rabi,2025-26,5650,Quintal
+21,Lentil (Masur),NA,Rabi,2025-26,6700,Quintal
+22,Rapeseed & Mustard,NA,Rabi,2025-26,5950,Quintal
+23,Safflower,NA,Rabi,2025-26,5940,Quintal
+24,Toria,NA,Rabi,2025-26,5950,Quintal
+25,Copra,Milling,Commercial,2025-26,11782,Quintal
+26,Copra,Ball,Commercial,2025-26,12300,Quintal
+27,De-husked Coconut,NA,Commercial,2025-26,3141,Quintal
+28,Raw Jute,NA,Commercial,2025-26,5650,Quintal
