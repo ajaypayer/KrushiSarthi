@@ -332,6 +332,15 @@ def get_local_db_answer(user_input):
     normalized = normalize_text(user_input)
     words = normalized.split()
     
+    # Fast intercept for simple greetings and thank-yous
+    GREETINGS = {
+        'hello', 'hi', 'hey', 'hola', 'good morning', 'thanks', 'thank you',
+        'namaste', 'namaskar', 'dhanyawad',
+        'नमस्ते', 'नमस्कार', 'धन्यवाद', 'आभारी', 'थँक्स', 'जय महाराष्ट्र', 'राम राम'
+    }
+    if set(words).issubset(GREETINGS) and words:
+        return "Hello! I am KrushiSarthi, your smart agricultural assistant. How can I help you today with crop rates, government schemes, or farm loans?"
+    
     # 1. Extract and translate keywords for structured matching (excluding generic stop words)
     structured_keywords = []
     general_keywords = []
@@ -666,7 +675,8 @@ Your Response:"""
         return get_answer_fallback(user_input)
 
     # Stage 2: Generate response using Gemini in the user's language
-    if db_results is not None:
+    # Only use SQL db_results if it is not empty, otherwise trigger local fallback!
+    if db_results:
         formatted_data = format_db_results(db_results)
         response_prompt = f"""You are a helpful agricultural assistant chatbot called KrushiSarthi.
 The user asked a question, and we retrieved some information from our database to help answer it.
@@ -678,7 +688,7 @@ Database Results:
 Guidelines:
 1. Answer the user's question clearly, politely, and accurately based on the database results.
 2. YOU MUST ANSWER IN THE SAME LANGUAGE AS THE USER'S QUESTION (e.g., Hindi for Hindi, Marathi for Marathi, English for English).
-3. If the database results are empty or do not contain relevant information to answer the question, politely tell the user in their language that you couldn't find the exact details, and provide general agricultural advice if possible.
+3. If the database results do not contain relevant information to answer the question, politely tell the user in their language that you couldn't find the exact details.
 4. Keep the response concise, informative, and formatted with clean paragraphs or bullet points if necessary.
 
 Your Response:"""
@@ -692,7 +702,20 @@ Your Response:"""
                 return translate_to_lang(local_res, user_lang)
             return get_answer_fallback(user_input)
     else:
+        print("[CHATBOT] No SQL database results found. Querying local database search fallback...")
         local_res = get_local_db_answer(user_input)
         if local_res:
+            response_prompt = f"""You are a helpful agricultural assistant chatbot called KrushiSarthi.
+The user asked a question, and we retrieved some matching information from our database.
+Format this information nicely and answer the user's question in the SAME language.
+
+User's Question: "{user_input}"
+Database Information:
+{local_res}
+
+Your Response:"""
+            final_response = call_gemini(response_prompt)
+            if final_response:
+                return final_response
             return translate_to_lang(local_res, user_lang)
         return get_answer_fallback(user_input)
