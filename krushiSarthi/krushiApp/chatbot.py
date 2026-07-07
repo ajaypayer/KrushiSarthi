@@ -328,6 +328,133 @@ def translate_to_lang(text, dest_lang):
     return text
 
 
+def search_local_database(user_input):
+    """
+    Search the SQLite database for the top 3 most relevant records matching the user's input
+    across Government Schemes, MSP Rates, Agriculture Loans, and Q&A tables.
+    """
+    normalized = normalize_text(user_input)
+    words = normalized.split()
+    
+    # Filter keywords (excluding stop words)
+    keywords = [w for w in words if len(w) >= 3 and w not in STOP_WORDS]
+    if not keywords:
+        return []
+
+    # Map words using TRANSLATION_DICT to English terms
+    english_keywords = []
+    for w in keywords:
+        if w in TRANSLATION_DICT:
+            english_keywords.append(TRANSLATION_DICT[w])
+        else:
+            english_keywords.append(w)
+            
+    english_keywords = list(dict.fromkeys(english_keywords))
+    
+    db_path = get_db_path()
+    conn = None
+    results = []
+    
+    try:
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        # 1. Search MSP Rates
+        for kw in english_keywords:
+            cursor.execute("""
+                SELECT crop, variety, season, marketing_year, msp_rupees_per_quintal, unit 
+                FROM csv_msp_rates 
+                WHERE crop LIKE ? OR variety LIKE ?
+                LIMIT 3
+            """, (f'%{kw}%', f'%{kw}%'))
+            rows = cursor.fetchall()
+            for r in rows:
+                results.append({
+                    'type': 'MSP Rate',
+                    'content': f"Crop: {r['crop']} ({r['variety']}), Season: {r['season']}, Marketing Year: {r['marketing_year']}, MSP Rate: Rs. {r['msp_rupees_per_quintal']} per {r['unit']}"
+                })
+                
+        # 2. Search Government Schemes
+        for kw in english_keywords:
+            cursor.execute("""
+                SELECT scheme_name, category, eligibility, benefits, official_website 
+                FROM csv_government_schemes 
+                WHERE scheme_name LIKE ? OR category LIKE ? OR benefits LIKE ? OR eligibility LIKE ?
+                LIMIT 3
+            """, (f'%{kw}%', f'%{kw}%', f'%{kw}%', f'%{kw}%'))
+            rows = cursor.fetchall()
+            for r in rows:
+                results.append({
+                    'type': 'Government Scheme',
+                    'content': f"Scheme Name: {r['scheme_name']} ({r['category']}), Eligibility: {r['eligibility']}, Benefits: {r['benefits']}, Website: {r['official_website']}"
+                })
+                
+        # 3. Search Agriculture Loans
+        for kw in english_keywords:
+            cursor.execute("""
+                SELECT loan_name, category, eligibility, purpose, documents_required, repayment_period, official_source 
+                FROM csv_agriculture_loans 
+                WHERE loan_name LIKE ? OR category LIKE ? OR purpose LIKE ? OR eligibility LIKE ?
+                LIMIT 3
+            """, (f'%{kw}%', f'%{kw}%', f'%{kw}%', f'%{kw}%'))
+            rows = cursor.fetchall()
+            for r in rows:
+                results.append({
+                    'type': 'Agriculture Loan',
+                    'content': f"Loan Name: {r['loan_name']} ({r['category']}), Eligibility: {r['eligibility']}, Purpose: {r['purpose']}, Documents Required: {r['documents_required']}, Repayment: {r['repayment_period']}, Source: {r['official_source']}"
+                })
+                
+        # 4. Search Agriculture Q&A FTS5 (ordered by relevance rank)
+        fts_query = " OR ".join(english_keywords)
+        try:
+            cursor.execute("""
+                SELECT question, answers 
+                FROM csv_agriculture_qa 
+                WHERE csv_agriculture_qa MATCH ? 
+                ORDER BY rank
+                LIMIT 3
+            """, (fts_query,))
+            rows = cursor.fetchall()
+            for r in rows:
+                results.append({
+                    'type': 'General Q&A',
+                    'content': f"Question: {r['question']} -> Answer: {r['answers']}"
+                })
+        except sqlite3.OperationalError:
+            # Fallback if FTS5 is not supported
+            for kw in english_keywords:
+                cursor.execute("""
+                    SELECT question, answers 
+                    FROM csv_agriculture_qa 
+                    WHERE question LIKE ? 
+                    LIMIT 3
+                """, (f'%{kw}%',))
+                rows = cursor.fetchall()
+                for r in rows:
+                    results.append({
+                        'type': 'General Q&A',
+                        'content': f"Question: {r['question']} -> Answer: {r['answers']}"
+                    })
+                    
+    except Exception as e:
+        print(f"[DATABASE SEARCH] Error: {e}")
+    finally:
+        if conn:
+            conn.close()
+            
+    # Deduplicate results based on content
+    seen = set()
+    unique_results = []
+    for r in results:
+        if r['content'] not in seen:
+            seen.add(r['content'])
+            unique_results.append(r)
+            
+    # Return top 3 matches
+    return unique_results[:3]
+
+
 # --- Offline/Local SQLite Database Fallback Search ---
 
 def get_local_db_answer(user_input):
@@ -570,160 +697,94 @@ def get_answer_fallback(user_input):
     return "Sorry, I didn't understand your question."
 
 
+def get_translated_note(dest_lang):
+    """
+    Get the general knowledge footnote translated to the target language.
+    """
+    if dest_lang == 'hi':
+        return "नोट: यह प्रतिक्रिया एआई के सामान्य ज्ञान का उपयोग करके उत्पन्न की गई है और यह आधिकारिक सरकारी जानकारी का प्रतिनिधित्व नहीं कर सकती है।"
+    if dest_lang == 'mr':
+        return "टीप: हा प्रतिसाद AI च्या सामान्य ज्ञानाचा वापर करून तयार केला गेला आहे आणि तो अधिकृत सरकारी माहितीचे प्रतिनिधित्व करू शकत नाही."
+    return "Note: This response is generated using AI's general knowledge and may not represent official government information."
+
+
 def get_answer(user_input):
     load_env()
     user_lang = detect_language(user_input)
     
-    api_key = os.environ.get('GEMINI_API_KEY')
-    if not api_key:
-        print("[CHATBOT] Gemini API key not found. Using offline local search fallback.")
-        local_res = get_local_db_answer(user_input)
-        if local_res:
-            return translate_to_lang(local_res, user_lang)
-        return get_answer_fallback(user_input)
-
-    # Stage 1: Generate SQL query to answer the question
-    sql_prompt = f"""You are a database querying assistant for an agricultural platform. Given a user's question, write a single SQLite SELECT query to retrieve relevant info to answer it.
-If the question does not require querying the database (e.g. standard greetings, general non-agricultural questions), reply ONLY with the word "NONE".
-
-Our SQLite database has these tables and columns:
-
-1. Table: `csv_government_schemes` (Government schemes for farmers)
-   Columns:
-   - id (INTEGER PRIMARY KEY)
-   - scheme_name (TEXT)
-   - category (TEXT)
-   - eligibility (TEXT)
-   - benefits (TEXT)
-   - documents_required (TEXT)
-   - official_website (TEXT)
-
-2. Table: `csv_msp_rates` (Minimum Support Price rates for crops)
-   Columns:
-   - id (INTEGER PRIMARY KEY)
-   - crop (TEXT) (e.g., Paddy, Wheat, Bajra, Maize, Cotton)
-   - variety (TEXT) (e.g., Common, Grade A, Hybrid, Maldandi)
-   - season (TEXT) (e.g., Kharif, Rabi)
-   - marketing_year (TEXT) (e.g., 2025-26)
-   - msp_rupees_per_quintal (REAL) (The price rate)
-   - unit (TEXT) (e.g., Quintal)
-
-3. Table: `csv_agriculture_loans` (Loans available for farming and agriculture)
-   Columns:
-   - id (INTEGER PRIMARY KEY)
-   - loan_name (TEXT) (e.g., Kisan Credit Card (KCC), Tractor Loan, Farm Pond Loan)
-   - category (TEXT) (e.g., Crop Loan, Animal Husbandry, Farm Machinery, Irrigation, Infrastructure)
-   - eligibility (TEXT)
-   - purpose (TEXT)
-   - documents_required (TEXT)
-   - repayment_period (TEXT)
-   - official_source (TEXT)
-
-4. Table: `csv_agriculture_qa` (General agricultural Q&A dataset containing 29,000+ QA pairs. Use this table if the user asks a general agriculture/farming question that is not covered by schemes, loans, or MSPs)
-   Columns:
-   - question (TEXT)
-   - answers (TEXT)
-   Note: This table is an FTS5 full-text search table. To query it, use SQLite MATCH or LIKE. For example:
-   SELECT answers FROM csv_agriculture_qa WHERE csv_agriculture_qa MATCH 'tomato crop' LIMIT 2;
-   Or:
-   SELECT answers FROM csv_agriculture_qa WHERE question LIKE '%soil erosion%' LIMIT 2;
-
-Rules:
-- The database columns and data (like crop names, scheme names) are stored in English.
-- The user might ask the question in English, Hindi, or Marathi. You MUST translate user terms to English in the SQL query (e.g., if the user asks about "धान" or "भात", search for "Paddy" in the crop column; if they ask about "कर्ज" or "ऋण", search for loan tables).
-- Always select all relevant/descriptive columns so that the query results are self-explanatory and contain rich context (e.g., select `crop, variety, season, marketing_year, msp_rupees_per_quintal, unit` instead of just `msp_rupees_per_quintal`).
-- Use case-insensitive LIKE pattern matching (e.g. `WHERE crop LIKE '%paddy%'`) for flexible text matching to prevent spelling mismatches.
-- Limit query results (using LIMIT 3 or LIMIT 5) to avoid returning too much data.
-- Return ONLY the raw SQL query. Do not wrap it in markdown code blocks like ```sql ... ```. Do not add comments. Do not explain. If no query is needed, reply ONLY with "NONE".
-
-Query Routing Examples:
-* User: "How do I know when my corn is ready to harvest?" -> SELECT answers FROM csv_agriculture_qa WHERE csv_agriculture_qa MATCH 'corn harvest' LIMIT 1;
-* User: "Why is crop rotation important?" -> SELECT answers FROM csv_agriculture_qa WHERE csv_agriculture_qa MATCH 'crop rotation' LIMIT 1;
-* User: "What is the MSP of Paddy for 2025-26?" -> SELECT crop, variety, season, marketing_year, msp_rupees_per_quintal, unit FROM csv_msp_rates WHERE crop LIKE '%paddy%' LIMIT 3;
-* User: "मला पीक कर्जासाठी कोणती कागदपत्रे लागतील?" -> SELECT loan_name, category, eligibility, purpose, documents_required, repayment_period, official_source FROM csv_agriculture_loans WHERE category LIKE '%crop%' OR purpose LIKE '%crop%' OR loan_name LIKE '%crop%' LIMIT 3;
-* User: "What is PM Kisan scheme?" -> SELECT scheme_name, category, eligibility, benefits, official_website FROM csv_government_schemes WHERE scheme_name LIKE '%pm kisan%' OR benefits LIKE '%pm kisan%' LIMIT 3;
-
-User's Question: "{user_input}"
-SQL Query:"""
-
-    print(f"[CHATBOT] User input: {user_input} (Detected Language: {user_lang})")
-    gemini_sql = call_gemini(sql_prompt)
+    # Translate language code to full language name for the prompt
+    lang_names = {'hi': 'Hindi', 'mr': 'Marathi', 'en': 'English'}
+    user_lang_name = lang_names.get(user_lang, 'English')
     
-    if gemini_sql:
-        gemini_sql = clean_sql(gemini_sql)
-        print(f"[CHATBOT] Gemini generated SQL: {gemini_sql}")
-    else:
-        print("[CHATBOT] Stage 1 SQL generation failed. Using local search fallback.")
-        local_res = get_local_db_answer(user_input)
-        if local_res:
-            return translate_to_lang(local_res, user_lang)
-        return get_answer_fallback(user_input)
+    # Step 2: Search local SQLite database for up to 3 relevant records
+    db_records = search_local_database(user_input)
+    
+    api_key = os.environ.get('GEMINI_API_KEY')
+    
+    if db_records:
+        # Step 3 & 6: Combine matched database records into a single context
+        context_parts = []
+        for idx, rec in enumerate(db_records, 1):
+            context_parts.append(f"Record {idx} ({rec['type']}):\n{rec['content']}")
+        context = "\n\n".join(context_parts)
+        
+        print(f"[CHATBOT] DB context found. Querying Gemini with strict context rules.")
+        
+        prompt = f"""You are a helpful agricultural assistant chatbot named KrushiSarthi.
+An user asked a question, and we retrieved the following relevant records from our database:
 
-    # Check if SQL generated is a valid query
-    db_results = None
-    if gemini_sql and gemini_sql.upper() != "NONE" and is_safe_sql(gemini_sql):
-        db_results = execute_sql(gemini_sql)
-        print(f"[CHATBOT] Database results: {db_results}")
-    elif gemini_sql and gemini_sql.upper() == "NONE":
-        response_prompt = f"""You are a helpful agricultural assistant chatbot called KrushiSarthi.
-Respond to the user's message politely and in the same language. If they greet you, greet them back and offer help with agricultural schemes, MSP rates, loans, and general farming.
-
-User's Message: "{user_input}"
-Your Response:"""
-        final_response = call_gemini(response_prompt)
-        if final_response:
-            return final_response
-        else:
-            return translate_to_lang("Hello! I am KrushiSarthi. How can I help you today?", user_lang)
-    else:
-        print("[CHATBOT] SQL unsafe or failed. Using local search fallback.")
-        local_res = get_local_db_answer(user_input)
-        if local_res:
-            return translate_to_lang(local_res, user_lang)
-        return get_answer_fallback(user_input)
-
-    # Stage 2: Generate response using Gemini in the user's language
-    # Only use SQL db_results if it is not empty, otherwise trigger local fallback!
-    if db_results:
-        formatted_data = format_db_results(db_results)
-        response_prompt = f"""You are a helpful agricultural assistant chatbot called KrushiSarthi.
-The user asked a question, and we retrieved some information from our database to help answer it.
+Database Context:
+{context}
 
 User's Question: "{user_input}"
-Database Results:
-{formatted_data}
+
+Guidelines (CRITICAL):
+1. Answer the user's question clearly, politely, and concisely.
+2. YOU MUST ANSWER THE QUESTION ONLY USING THE PROVIDED DATABASE CONTEXT.
+3. NEVER fabricate, invent, or hallucinate information. If the context does not contain the answer to the user's question, state that you couldn't find the exact details in the database.
+4. Preserve important numbers, eligibility criteria, interest rates, dates, and official source links exactly as they are in the context.
+5. YOU MUST RESPOND IN the detected user language ({user_lang_name}).
+
+Your Response:"""
+        
+        if api_key:
+            response = call_gemini(prompt)
+            if response:
+                return response
+                
+        # Offline fallback if API key is missing or call fails (429/503)
+        print("[CHATBOT] Gemini API offline/rate-limited. Falling back to direct database results.")
+        local_res = get_local_db_answer(user_input)
+        if local_res:
+            return translate_to_lang(local_res, user_lang)
+        return get_answer_fallback(user_input)
+        
+    else:
+        # Step 4: No context found in database. Answer using Gemini's general knowledge.
+        print(f"[CHATBOT] No DB context found. Querying Gemini's general knowledge.")
+        
+        prompt = f"""You are a helpful agricultural assistant chatbot named KrushiSarthi.
+Answer the user's question using your general knowledge about agriculture, farming, crops, and rural livelihoods.
+
+User's Question: "{user_input}"
 
 Guidelines:
-1. Answer the user's question clearly, politely, and accurately based on the database results.
-2. YOU MUST ANSWER IN THE SAME LANGUAGE AS THE USER'S QUESTION (e.g., Hindi for Hindi, Marathi for Marathi, English for English).
-3. If the database results do not contain relevant information to answer the question, politely tell the user in their language that you couldn't find the exact details.
-4. Keep the response concise, informative, and formatted with clean paragraphs or bullet points if necessary.
+1. Answer the user's question clearly, politely, and accurately.
+2. Keep the response helpful and focused on agriculture.
+3. YOU MUST RESPOND IN the detected user language ({user_lang_name}).
 
 Your Response:"""
-        final_response = call_gemini(response_prompt)
-        if final_response:
-            return final_response
-        else:
-            print("[CHATBOT] Stage 2 response generation failed. Using local search fallback.")
-            local_res = get_local_db_answer(user_input)
-            if local_res:
-                return translate_to_lang(local_res, user_lang)
-            return get_answer_fallback(user_input)
-    else:
-        print("[CHATBOT] No SQL database results found. Querying local database search fallback...")
+        
+        if api_key:
+            response = call_gemini(prompt)
+            if response:
+                # Step 5: Append the general knowledge warning footnote
+                footnote = get_translated_note(user_lang)
+                return f"{response}\n\n{footnote}"
+                
+        # Offline fallback if API key is missing or call fails (429/503)
+        print("[CHATBOT] Gemini API offline/rate-limited. Querying offline backup search.")
         local_res = get_local_db_answer(user_input)
         if local_res:
-            response_prompt = f"""You are a helpful agricultural assistant chatbot called KrushiSarthi.
-The user asked a question, and we retrieved some matching information from our database.
-Format this information nicely and answer the user's question in the SAME language.
-
-User's Question: "{user_input}"
-Database Information:
-{local_res}
-
-Your Response:"""
-            final_response = call_gemini(response_prompt)
-            if final_response:
-                return final_response
             return translate_to_lang(local_res, user_lang)
         return get_answer_fallback(user_input)
