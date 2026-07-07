@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # KrushiSarthi
 
 Welcome to KrushiSarthi — a smart and user-friendly Django platform designed to support farmers with access to vital agricultural information, government schemes, MSP rates, loan guidance, and communication tools.
