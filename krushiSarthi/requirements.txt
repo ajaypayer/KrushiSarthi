@@ -1,4 +1,4 @@
-Django>=6.0.2
+Django
 requests
 gunicorn
 whitenoise
